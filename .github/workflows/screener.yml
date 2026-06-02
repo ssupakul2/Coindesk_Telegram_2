@@ -1,4 +1,4 @@
-name: Coindesk to Telegram Crypto Screener
+name: Coindesk 2
 
 on:
   # รับแรงสะกิดผ่าน API จากบริการภายนอก
