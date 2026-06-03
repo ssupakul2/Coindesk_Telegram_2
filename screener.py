@@ -105,7 +105,7 @@ def send_telegram_messages(chunks: list) -> None:
             if resp.status_code == 200:
                 logger.info(f"Telegram ส่งสำเร็จ (ส่วน {idx}/{len(chunks)})")
             else:
-                logger.warning(f"Telegram ส่งล้มهلว (ส่วน {idx}): {resp.text}")
+                logger.warning(f"Telegram ส่งล้มเหลว (ส่วน {idx}): {resp.text}")
         except Exception as e:
             logger.error(f"Exception ขณะส่ง Telegram (ส่วน {idx}): {e}")
 
@@ -168,7 +168,7 @@ def analyze_weekly_context(coin: str) -> dict:
     params = {
         "fsym": coin,
         "tsym": "USD",
-        "limit": 1000,  # ดึงข้อมูลประมาณ 2.7 ปีเพื่อให้แท่ง 1W มีปริมาณมากพอวิเคราะห์เทรนด์และ Div
+        "limit": 1000,  
         "api_key": CRYPTOCOMPARE_API_KEY,
     }
     
@@ -187,7 +187,6 @@ def analyze_weekly_context(coin: str) -> dict:
             df["time"] = pd.to_datetime(df["time"], unit="s")
             df.set_index("time", inplace=True)
 
-            # แปลงข้อมูลรายวันเป็นระดับรายสัปดาห์
             df_w = df.resample("W").agg(
                 {
                     "open": "first",
@@ -200,7 +199,6 @@ def analyze_weekly_context(coin: str) -> dict:
             if len(df_w) < RSI_PERIOD + LOOKBACK_BARS + 5:
                 return result
 
-            # คำนวณ RSI ระดับสัปดาห์
             close = df_w["close"]
             delta = close.diff()
             gain = delta.clip(lower=0)
@@ -213,7 +211,6 @@ def analyze_weekly_context(coin: str) -> dict:
             curr_rsi_w = round(df_w["RSI"].iloc[-1], 2)
             result["rsi_weekly"] = curr_rsi_w
 
-            # ค้นหาโครงสร้าง Weekly Bullish Divergence จากข้อมูลสัปดาห์ย้อนหลัง
             prev_window = df_w.iloc[-(LOOKBACK_BARS + 1) : -(LOOKBACK_SKIP_BARS)]
             if len(prev_window) > 0:
                 min_low_idx = prev_window["low"].argmin()
@@ -223,11 +220,9 @@ def analyze_weekly_context(coin: str) -> dict:
                 curr_price_w = df_w["low"].iloc[-1]
                 curr_rsi_w_now = df_w["RSI"].iloc[-1]
 
-                # ราคาเกิดฐานที่ต่ำลง (หรือเท่าเดิม) แต่ RSI ยกตัวขึ้นสูงกว่าจุดฐานเดิมในโซน Bullish Max
                 if (prev_low_rsi <= RSI_BULL_DIV_MAX) and (curr_price_w < prev_low_price) and (curr_rsi_w_now > prev_low_rsi):
                     result["weekly_bullish_div"] = True
 
-            # สรุปป้ายสถานะระดับ 1W
             if result["weekly_bullish_div"]:
                 result["weekly_status_label"] = f"👑 <b>เกิด Weekly Bullish Divergence ในระดับภาพใหญ่!</b> (RSI 1W: {curr_rsi_w})"
             elif curr_rsi_w <= RSI_OVERSOLD:
@@ -244,6 +239,96 @@ def analyze_weekly_context(coin: str) -> dict:
 
     except Exception as e:
         logger.error(f"{coin} (Weekly): ระบบขัดข้องระหว่างคำนวณข้อมูลระดับสัปดาห์: {e}")
+        
+    return result
+
+
+# ==========================================
+# New Features: Monthly (1M) Analysis Module
+# ==========================================
+def analyze_monthly_targets(coin: str) -> dict:
+    """ดึงข้อมูลรายวันย้อนหลังมาแปลงเป็นแท่ง 1M เพื่อหาแนวรับ-แนวต้านหลัก และคำนวณเป้าหมายราคาตามโมเมนตัม"""
+    url = "https://min-api.cryptocompare.com/data/v2/histoday"
+    params = {
+        "fsym": coin,
+        "tsym": "USD",
+        "limit": 2000,  # ดึงข้อมูลยาวประมาณ 5.4 ปี เพื่อแปลงเป็นแท่งเดือนที่มีเสถียรภาพในการคำนวณ
+        "api_key": CRYPTOCOMPARE_API_KEY,
+    }
+    
+    result = {
+        "m_resistance_target": None,
+        "m_support_target": None,
+        "monthly_summary_label": "⏳ ไม่สามารถคำนวณเป้าหมายระดับเดือนได้",
+        "monthly_trend": "sideways"
+    }
+
+    try:
+        resp = requests.get(url, params=params, timeout=15)
+        data = resp.json()
+
+        if data.get("Response") == "Success":
+            df = pd.DataFrame(data["Data"]["Data"])
+            df["time"] = pd.to_datetime(df["time"], unit="s")
+            df.set_index("time", inplace=True)
+
+            # แปลงข้อมูลรายวัน (1D) เป็นระดับรายเดือน (1M)
+            df_m = df.resample("ME").agg(
+                {
+                    "open": "first",
+                    "high": "max",
+                    "low": "min",
+                    "close": "last"
+                }
+            ).dropna()
+
+            if len(df_m) < 5:
+                return result
+
+            # ใช้แท่งเดือนก่อนหน้าที่ปิดสมบูรณ์แล้ว (แท่งรองสุดท้าย) ในการหา Key Levels
+            last_month = df_m.iloc[-2]
+            current_month = df_m.iloc[-1]
+            
+            m_high = last_month["high"]
+            m_low = last_month["low"]
+            m_close = last_month["close"]
+            
+            # คำนวณกรอบมูลค่าด้วย Classic Pivot Points ระดับเดือน
+            pivot = (m_high + m_low + m_close) / 3
+            r1 = (2 * pivot) - m_low
+            s1 = (2 * pivot) - m_high
+            
+            # คำนวณเส้นค่าเฉลี่ย 12 แท่งเดือน (EMA 12 เดือน เสมือนตัวแทนแนวโน้มหลักรอบ 1 ปี)
+            if len(df_m) >= 12:
+                df_m["EMA_12"] = df_m["close"].ewm(span=12, adjust=False).mean()
+                m_ema12 = df_m["EMA_12"].iloc[-1]
+            else:
+                m_ema12 = pivot
+
+            curr_price = current_month["close"]
+            
+            # ประเมินแนวโน้มและกรอบเป้าหมายราคาตามโมเมนตัมระดับเดือน
+            if curr_price >= m_ema12:
+                target_up = max(r1, m_high)
+                target_down = pivot
+                trend_status = "bullish"
+                status_text = "🔮 <b>ภาพ 1M (Bullish):</b> ทิศทางหลักในภาพใหญ่เป็นขาขึ้น มีเป้าหมายราคาวิ่งทดสอบกรอบบน"
+            else:
+                target_up = pivot
+                target_down = min(s1, m_low)
+                trend_status = "bearish"
+                status_text = "🔮 <b>ภาพ 1M (Bearish):</b> ทิศทางหลักในภาพใหญ่เป็นขาลง/พักฐาน มีแนวโน้มไหลลงหาแนวรับกรอบล่าง"
+
+            result["m_resistance_target"] = target_up
+            result["m_support_target"] = target_down
+            result["monthly_summary_label"] = status_text
+            result["monthly_trend"] = trend_status
+            
+            logger.info(f"{coin}: วิเคราะห์เป้าหมายมูลค่าระดับเดือน (1M) สำเร็จ")
+            return result
+
+    except Exception as e:
+        logger.error(f"{coin} (Monthly): ระบบขัดข้องระหว่างคำนวณกรอบเป้าหมายราคา: {e}")
         
     return result
 
@@ -513,6 +598,8 @@ def is_volume_confirmed(row: pd.Series) -> bool:
 
 
 def format_price(price: float) -> str:
+    if price is None:
+        return "N/A"
     if price < 0.0001:
         return f"{price:.8f}"
     elif price < 0.001:
@@ -543,8 +630,12 @@ def scan_market():
             logger.warning(f"{coin}: ข้อมูลไม่พอ (ต้องการ > {EMA_LONG + 10} แท่ง) – ข้ามเหรียญนี้")
             continue
 
-        # 2. ดึงข้อมูล 1W มาวิเคราะห์ภาพใหญ่ (ดึงข้อมูลรายวันมาแปลงเป็นรายสัปดาห์)
+        # 2. ดึงข้อมูล 1W มาวิเคราะห์ภาพใหญ่รอบปานกลาง
         weekly_ctx = analyze_weekly_context(coin)
+        time.sleep(API_RATE_LIMIT_DELAY)
+
+        # 3. ดึงข้อมูล 1M มาประเมินกรอบเป้าหมายมูลค่ารอบใหญ่ยักษ์
+        monthly_ctx = analyze_monthly_targets(coin)
         time.sleep(API_RATE_LIMIT_DELAY)
 
         df = calculate_indicators(df)
@@ -608,11 +699,13 @@ def scan_market():
                 signal_type = f"Bullish OB (สวนเทรนด์-ระวัง) 🚀{vol_tag}"
 
         if signal_type:
-            # เพิ่มการติดแสตมป์ดาวทอง/เพชร หากสัปดาห์หนุนหลัง
+            # เพิ่มการติดตราประทับหากเทรนด์ 1M สนับสนุนหนุนหลังรอบใหญ่ด้วย
             if weekly_ctx["weekly_bullish_div"]:
                 signal_type = f"⭐ {signal_type} + [1W Bullish Divergence คอนเฟิร์มภาพใหญ่]"
             elif weekly_ctx["rsi_weekly"] and weekly_ctx["rsi_weekly"] <= 35:
                 signal_type = f"💎 {signal_type} + [1W โซนแนวรับก้นหลุม]"
+            elif monthly_ctx["monthly_trend"] == "bullish":
+                signal_type = f"🔥 {signal_type} + [1M มหาเทรนด์เดือนขาขึ้นคุม]"
 
             entry_min      = format_price(current_price * 0.97)
             entry_max      = format_price(current_price * 1.00)
@@ -639,6 +732,7 @@ def scan_market():
                     "bounce_info":   bounce_info,
                     "ob_info":       ob_info,
                     "weekly_ctx":    weekly_ctx,
+                    "monthly_ctx":   monthly_ctx,
                 }
             )
 
@@ -662,6 +756,7 @@ def scan_market():
                     "trend_info":    trend_info,
                     "ob_info":       ob_info,
                     "weekly_ctx":    weekly_ctx,
+                    "monthly_ctx":   monthly_ctx,
                 }
             )
 
@@ -711,6 +806,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
             bi = opt["bounce_info"]
             ob = opt["ob_info"]
             w_ctx = opt.get("weekly_ctx", {})
+            m_ctx = opt.get("monthly_ctx", {})
 
             trend_block = (
                 f"\n📐 <b>แนวโน้มต่อเนื่อง (4H):</b> {ti['trend_label']}"
@@ -727,10 +823,21 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
                 ob_price_formatted = format_price(ob["bullish_ob_price"])
                 ob_block = f"\n🛡️ <b>Smart Money OB Support:</b> แนวรับราคาก้อนใหญ่ย้อนหลังที่ ${ob_price_formatted}"
 
-            # ดึงข้อมูลสถานะแท่งระดับสัปดาห์ (1W) มาต่อในกล่องข้อความ
             weekly_block = ""
             if w_ctx and w_ctx.get("rsi_weekly"):
                 weekly_block = f"\n🗓️ <b>ภาพรวมระดับสัปดาห์ (1W):</b> {w_ctx['weekly_status_label']}"
+
+            # ดึงข้อมูลการประเมินกรอบราคาจากแท่ง Month (1M) มาต่อสายตาผู้ใช้งานก่อนเคาะออเดอร์
+            monthly_block = ""
+            if m_ctx and m_ctx.get("m_resistance_target"):
+                target_up_str = format_price(m_ctx["m_resistance_target"])
+                target_down_str = format_price(m_ctx["m_support_target"])
+                monthly_block = (
+                    f"\n🔮 <b>กรอบเป้าหมายมูลค่า (1M):</b>"
+                    f"\n   🔼 โซนมูลค่าสูงสุด/เป้าหมายขึ้น: <code>${target_up_str}</code>"
+                    f"\n   🔽 โซนมูลค่าต่ำสุด/รับลึกถ้าหลุด: <code>${target_down_str}</code>"
+                    f"\n   👉 {m_ctx['monthly_summary_label']}"
+                )
 
             coin_msg = (
                 f"\n\n🪙 <b>เหรียญ: {opt['coin']}</b>"
@@ -744,6 +851,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
                 f"{bounce_block}"
                 f"{ob_block}"
                 f"{weekly_block}"
+                f"{monthly_block}"
                 f"\n🟢 ช่วงเข้าซื้อ: <code>{opt['entry']}</code>"
                 f"\n💰 เป้าหมายขาย 1 (TP1): <code>{opt['tp1']}</code>"
                 f"\n💰 เป้าหมายขาย 2 (TP2): <code>{opt['tp2']}</code>"
@@ -775,6 +883,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
             ti = opt["trend_info"]
             ob = opt["ob_info"]
             w_ctx = opt.get("weekly_ctx", {})
+            m_ctx = opt.get("monthly_ctx", {})
             
             trend_block = (
                 f"\n📐 <b>แนวโน้มต่อเนื่อง (4H):</b> {ti['trend_label']}"
@@ -790,6 +899,17 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
             if w_ctx and w_ctx.get("rsi_weekly"):
                 weekly_block = f"\n🗓️ <b>ภาพรวมระดับสัปดาห์ (1W):</b> {w_ctx['weekly_status_label']}"
 
+            monthly_block = ""
+            if m_ctx and m_ctx.get("m_resistance_target"):
+                target_up_str = format_price(m_ctx["m_resistance_target"])
+                target_down_str = format_price(m_ctx["m_support_target"])
+                monthly_block = (
+                    f"\n🔮 <b>กรอบเป้าหมายมูลค่า (1M):</b>"
+                    f"\n   🔼 โซนมูลค่าสูงสุด/เป้าหมายขึ้น: <code>${target_up_str}</code>"
+                    f"\n   🔽 โซนมูลค่าต่ำสุด/รับลึกถ้าหลุด: <code>${target_down_str}</code>"
+                    f"\n   👉 {m_ctx['monthly_summary_label']}"
+                )
+
             coin_msg = (
                 f"\n\n🪙 <b>เหรียญ: {opt['coin']}</b>"
                 f"\n📊 เทรนด์: {opt['trend']}"
@@ -800,6 +920,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
                 f"{trend_block}"
                 f"{ob_block}"
                 f"{weekly_block}"
+                f"{monthly_block}"
                 f"\n🔴 ช่วงราคาที่ควรทยอยขาย: <code>{opt['tp_zone']}</code>"
                 f"\n❌ จุดล็อกกำไรหลุดตรงนี้ต้องหนี (Safety Exit): <code>{opt['exit']}</code>"
             )
@@ -823,9 +944,9 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
 # Main Execution Block
 # ==========================================
 if __name__ == "__main__":
-    logger.info("เริ่มต้นใช้งาน Crypto Screener 4H + 1W Multi-Timeframe v5...")
+    logger.info("เริ่มต้นใช้งาน Crypto Screener 4H + 1W + 1M Multi-Timeframe v6...")
 
-    # 1. ทำการสแกนตลาดและวิเคราะห์แนวโน้มควบคู่ทั้ง 4H และ 1W
+    # 1. ทำการสแกนตลาดและวิเคราะห์แนวโน้มควบคู่ทั้ง 4H, 1W และ 1M
     buy_list, sell_list, market_summary = scan_market()
 
     logger.info(f"สแกนระบบเสร็จสมบูรณ์ → พบสัญญาณซื้อ: {len(buy_list)} ตัว | พบสัญญาณขาย/ระวัง: {len(sell_list)} ตัว")
