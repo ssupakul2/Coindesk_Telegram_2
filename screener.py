@@ -65,11 +65,11 @@ OB_LOOKBACK = 20
 OB_IMBALANCE_RATIO = 1.5      
 FVG_THRESHOLD_PCT = 0.2       # ขนาดขั้นต่ำของช่องว่าง FVG (%) เพื่อป้องกันช่องว่างขนาดเล็กเกินไป
 
-# --- Take Profit Tiers ---
+# --- Take Profit & Stop Loss Tiers (Optimized for 4H Timeframe) ---
 TP_TIERS = {
-    "major":  {"tp1": 0.08, "tp2": 0.12, "sl_buffer": 0.02},
-    "mid":    {"tp1": 0.12, "tp2": 0.15, "sl_buffer": 0.025},
-    "small":  {"tp1": 0.18, "tp2": 0.25, "sl_buffer": 0.05},
+    "major":  {"tp1": 0.06, "tp2": 0.12, "sl_buffer": 0.025},  # SL ~2.5% เน้นความแม่นยำสูง
+    "mid":    {"tp1": 0.12, "tp2": 0.20, "sl_buffer": 0.050},  # SL ~5.0% เผื่อแรงสะบัดเคลียร์เลเวอเรจ
+    "small":  {"tp1": 0.20, "tp2": 0.35, "sl_buffer": 0.080},  # SL ~8.0% รองรับความซิ่งของเหรียญเล็ก
 }
 
 COIN_TIER = {
