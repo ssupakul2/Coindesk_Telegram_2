@@ -67,7 +67,7 @@ FVG_THRESHOLD_PCT = 0.2
 
 # --- Take Profit Tiers ---
 TP_TIERS = {
-    "major":  {"tp1": 0.08, "tp2": 0.12, "sl_buffer": 0.025},
+    "major":  {"tp1": 0.10, "tp2": 0.15, "sl_buffer": 0.025},
     "mid":    {"tp1": 0.15, "tp2": 0.20, "sl_buffer": 0.050},
     "small":  {"tp1": 0.20, "tp2": 0.35, "sl_buffer": 0.080},
 }
