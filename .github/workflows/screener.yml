@@ -1,4 +1,4 @@
-name: Coindesk 2
+name: CryptoCompare All Report
 
 on:
   # รับแรงสะกิดผ่าน API จากบริการภายนอก
