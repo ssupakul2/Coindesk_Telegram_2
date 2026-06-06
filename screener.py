@@ -1,4 +1,4 @@
-import os
+np os
 import time
 import math
 import logging
@@ -24,7 +24,7 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 CRYPTOCOMPARE_API_KEY = os.getenv("CRYPTOCOMPARE_API_KEY")
 
 # --- การจัดการเงินทุน (Risk Management) ---
-PORTFOLIO_USDT = 1000.0   # ขนาดพอร์ตของคุณ (ปรับแก้ตรงนี้)
+PORTFOLIO_USDT = 1500.0   # ขนาดพอร์ตของคุณ (ปรับแก้ตรงนี้)
 RISK_PER_TRADE_PCT = 2.0  # ยอมขาดทุนสูงสุดกี่ % ของพอร์ตต่อ 1 ไม้
 
 COINS = [
@@ -788,6 +788,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
                 confluence_report += f"\n   🔻 <b>Deep Support (กรณีหลุด):</b>"
                 confluence_report += f"\n      - Fibo 88.6%: <code>${format_price(w_ctx.get('fibo_886'))}</code>"
                 confluence_report += f"\n      - Liquidity Pool: <code>${format_price(w_ctx.get('liquidity_pool'))}</code>"
+                confluence_report += f"\n      - Psycho Support: <code>${format_price(w_ctx.get('psycho_support'))}</code>"
 
             if fvg.get("has_fvg_support"): confluence_report += f"\n   ⚡พบช่องว่าง FVG ยักษ์ (4H): <code>${format_price(fvg['fvg_bottom'])} - ${format_price(fvg['fvg_top'])}</code>"
             if ob.get("has_bullish_ob"): confluence_report += f"\n   🐳 Smart Money OB Support: <code>${format_price(ob['bullish_ob_price'])}</code>"
