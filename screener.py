@@ -450,6 +450,41 @@ def calculate_indicators(df: pd.DataFrame) -> pd.DataFrame:
     df["VOL_MA20"] = df["volumeto"].rolling(20).mean()
     return df
 
+def estimate_price_for_target_rsi(df: pd.DataFrame, target_rsi: float = 70.0, period: int = RSI_PERIOD) -> float:
+    """
+    คำนวณหาราคาคาดการณ์ (Projected Price) ที่จะทำให้ RSI ไปแตะเป้าหมายที่ต้องการ (เช่น 70 หรือ 30)
+    """
+    if len(df) < period + 1:
+        return None
+    
+    close = df["close"]
+    delta = close.diff()
+    gain = delta.clip(lower=0)
+    loss = -delta.clip(upper=0)
+    
+    avg_gain = gain.ewm(com=period - 1, adjust=False).mean().iloc[-1]
+    avg_loss = loss.ewm(com=period - 1, adjust=False).mean().iloc[-1]
+    
+    curr_price = close.iloc[-1]
+    
+    if target_rsi >= 100: return curr_price * 1.5
+    if target_rsi <= 0: return curr_price * 0.5
+    
+    target_rs = target_rsi / (100.0 - target_rsi)
+    
+    if target_rsi > 50:
+        next_avg_loss = (avg_loss * (period - 1)) / period
+        required_avg_gain = target_rs * next_avg_loss
+        required_gain = (required_avg_gain * period) - (avg_gain * (period - 1))
+        required_gain = max(0, required_gain) 
+        return curr_price + required_gain
+    else:
+        next_avg_gain = (avg_gain * (period - 1)) / period
+        required_avg_loss = next_avg_gain / target_rs
+        required_loss = (required_avg_loss * period) - (avg_loss * (period - 1))
+        required_loss = max(0, required_loss)
+        return curr_price - required_loss
+
 def find_fair_value_gaps(df: pd.DataFrame) -> dict:
     fvg_result = {"has_fvg_support": False, "fvg_top": None, "fvg_bottom": None}
     if len(df) < 4:
@@ -745,6 +780,9 @@ def scan_market():
         ob_info = find_order_blocks(df)
         fvg_info = find_fair_value_gaps(df)
 
+        # --- Dynamic TP/Target Estimates ---
+        dynamic_tp_ob = estimate_price_for_target_rsi(df, target_rsi=70.0)
+
         fibo_4h_max = df["high"].iloc[-60:].max()
         fibo_4h_min = df["low"].iloc[-60:].min()
         fibo_4h_618 = fibo_4h_max - (0.618 * (fibo_4h_max - fibo_4h_min))
@@ -760,7 +798,6 @@ def scan_market():
         in_ob_zone = ob_info["has_bullish_ob"] and (current_price <= ob_info["bullish_ob_price"] * 1.03)
         in_fvg_zone = fvg_info["has_fvg_support"] and (current_price <= fvg_info["fvg_top"]) and (current_price >= fvg_info["fvg_bottom"] * 0.99)
 
-        # [ใหม่] เช็คการลงลึกถึง Deep Support (78.6% หรือ Liquidity Pool / Psycho Support)
         in_deep_support = False
         if weekly_ctx.get("fibo_786") is not None:
             if (current_price <= weekly_ctx["fibo_786"] * 1.02) or \
@@ -793,7 +830,6 @@ def scan_market():
             bearish_coins += 1
             coin_trends_summary.append(f"• {coin}: 🔴 ขาลง (RSI 4H: {rsi_rounded}) | {trend_info['trend_label']}")
 
-            # [ส่วนที่ปรับปรุง] หากราคาดิ่งลงแรงถึง Deep Support
             if in_deep_support and is_divergence:
                 signal_type = f"🚨 DEEP REVERSAL (Liquidity/Fibo 78.6-88.6) + Bullish Div 🐳{vol_tag}"
             elif in_deep_support and bounce_info["quality"] == "strong":
@@ -837,6 +873,7 @@ def scan_market():
                     "entry":         f"${entry_min} - ${entry_max}",
                     "tp1":           f"${format_price(target_tp1)} (+{tp1_pct*100:.0f}%)",
                     "tp2":           f"${format_price(target_tp2)} (+{tp2_pct*100:.0f}%)",
+                    "dynamic_tp":    f"${format_price(dynamic_tp_ob)}",
                     "sl":            f"${stop_loss}",
                     "vol_confirmed": vol_confirmed,
                     "trend_info":    trend_info,
@@ -924,7 +961,6 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
                 confluence_report += f"\n   🔹 Fibo 1W (61.8%): <code>${format_price(w_ctx['fibo_618'])}</code>"
                 confluence_report += f"\n   🔸 Fibo 1W (78.6%): <code>${format_price(w_ctx['fibo_786'])}</code>"
                 
-                # [ปรับปรุง] แสดงแผนสำรองแนวรับลึก
                 confluence_report += f"\n   🔻 <b>Deep Support (กรณีหลุด):</b>"
                 confluence_report += f"\n      - Fibo 88.6%: <code>${format_price(w_ctx.get('fibo_886'))}</code>"
                 confluence_report += f"\n      - Liquidity Pool: <code>${format_price(w_ctx.get('liquidity_pool'))}</code>"
@@ -968,8 +1004,9 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
                 f"{monthly_block}"
                 f"{cycle_block}"
                 f"\n🟢 ช่วงเข้าซื้อพิจารณา: <code>{opt['entry']}</code>"
-                f"\n💰 เป้าหมายขาย 1 (TP1): <code>{opt['tp1']}</code>"
-                f"\n💰 เป้าหมายขาย 2 (TP2): <code>{opt['tp2']}</code>"
+                f"\n💰 เป้าหมาย Fix (TP1): <code>{opt['tp1']}</code>"
+                f"\n💰 เป้าหมาย Fix (TP2): <code>{opt['tp2']}</code>"
+                f"\n🔥 <b>เป้าหมาย Dynamic (RSI=70): <code>{opt['dynamic_tp']}</code></b>"
                 f"\n❌ ตัดขาดทุนป้องกันภัย (SL): <code>{opt['sl']}</code>"
             )
 
@@ -1025,7 +1062,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
 # Main Execution Block
 # ==========================================
 if __name__ == "__main__":
-    logger.info("เริ่มต้นใช้งาน Crypto Screener Multi-Timeframe (Macro Fibo + Deep Support Alert)...")
+    logger.info("เริ่มต้นใช้งาน Crypto Screener Multi-Timeframe (Macro Fibo + Deep Support Alert + Dynamic TP)...")
 
     buy_list, sell_list, market_summary = scan_market()
     logger.info(f"สแกนระบบเสร็จสมบูรณ์ → พบสัญญาณซื้อคุณภาพ: {len(buy_list)} ตัว | พบสัญญาณขาย: {len(sell_list)} ตัว")
