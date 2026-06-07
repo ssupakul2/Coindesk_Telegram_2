@@ -370,12 +370,7 @@ def analyze_cycle_targets(coin: str) -> dict:
         pass
     return result
 
-
-# --- เพิ่มฟังก์ชันวิเคราะห์ข้อมูล On-Chain ย้อนหลัง 1 เดือน ---
 def analyze_onchain_momentum(coin: str) -> dict:
-    """
-    วิเคราะห์ข้อมูล On-Chain ย้อนหลัง 30 วัน เพื่อตรวจสอบแรงกดดันและพฤติกรรมวาฬล่วงหน้า 1 เดือน
-    """
     url = "https://min-api.cryptocompare.com/data/blockchain/histo/day"
     params = {
         "fsym": coin,
@@ -396,7 +391,6 @@ def analyze_onchain_momentum(coin: str) -> dict:
         if data.get("Response") == "Success" and data.get("Data") and isinstance(data["Data"].get("Data"), list):
             df_onchain = pd.DataFrame(data["Data"]["Data"])
             if len(df_onchain) >= 15:
-                # ค้นหาคอลัมน์ธุรกรรมกระเป๋าวาฬหรือธุรกรรมรวมตาม Schema ของ CryptoCompare
                 tx_col = None
                 for col in ['large_transaction_count', 'transaction_count', 'zero_balance_addresses_all_time']:
                     if col in df_onchain.columns:
@@ -404,17 +398,16 @@ def analyze_onchain_momentum(coin: str) -> dict:
                         break
                 
                 if tx_col:
-                    recent_avg = df_onchain[tx_col].iloc[-5:].mean()   # ค่าเฉลี่ย 5 วันล่าสุด
-                    prior_avg = df_onchain[tx_col].iloc[-30:-5].mean() # ค่าเฉลี่ยช่วง 1 เดือนก่อนหน้า
+                    recent_avg = df_onchain[tx_col].iloc[-5:].mean()
+                    prior_avg = df_onchain[tx_col].iloc[-30:-5].mean()
                     
                     if prior_avg > 0:
                         change_pct = ((recent_avg - prior_avg) / prior_avg) * 100
                         result["large_tx_change_pct"] = round(change_pct, 2)
                         
-                        # 🔴 หากปริมาณธุรกรรมใหญ่พุ่งขึ้นเกิน 40% ในขณะที่ราคากองอยู่แนวรับ แปลว่าเสี่ยงหลุดหลุมสูงมาก
                         if change_pct > 40.0:
                             result["onchain_warning"] = True
-                            result["onchain_label"] = f"🚨 <b>On-Chain Warning (1M): วาฬเคลื่อนไหวผิดปกติ!</b> มีปริมาณธุรกรรมยักษ์เพิ่มขึ้น {change_pct:.1f}% ในช่วงนี้ (ระวังแรงเทขายทุบทะลุแนวรับสถาบัน)"
+                            result["onchain_label"] = f"🚨 <b>On-Chain Warning (1M): วาฬเคลื่อนไหวผิดปกติ!</b> มีปริมาณธุรกรรมยักษ์เพิ่มขึ้น {change_pct:.1f}% ในช่วงนี้"
                         else:
                             result["onchain_label"] = f"🔹 On-Chain (1M): ปกติ (ปริมาณธุรกรรมวาฬเปลี่ยนแปลง {change_pct:+.1f}%)"
     except Exception as e:
@@ -422,6 +415,89 @@ def analyze_onchain_momentum(coin: str) -> dict:
         
     return result
 
+def check_death_cross_1d(coin: str) -> dict:
+    """
+    ตรวจสอบสัญญาณ Death Cross (EMA50 ตัด EMA200 ลง) บน Timeframe 1D ย้อนหลัง 1 เดือน (30 วัน)
+    """
+    url = "https://min-api.cryptocompare.com/data/v2/histoday"
+    params = {"fsym": coin, "tsym": "USD", "limit": 250, "api_key": CRYPTOCOMPARE_API_KEY}
+    
+    result = {
+        "has_death_cross": False,
+        "death_cross_label": "⚪ 1D Death Cross: ปลอดภัย (ยังไม่เกิดการตัดลง)"
+    }
+
+    try:
+        resp = requests.get(url, params=params, timeout=15)
+        data = resp.json()
+        
+        if data.get("Response") == "Success":
+            df = pd.DataFrame(data["Data"]["Data"])
+            df["close"] = pd.to_numeric(df["close"])
+            df["EMA_50"] = df["close"].ewm(span=50, adjust=False).mean()
+            df["EMA_200"] = df["close"].ewm(span=200, adjust=False).mean()
+
+            df_last_30 = df.iloc[-30:]
+            
+            for i in range(1, len(df_last_30)):
+                prev_50 = df_last_30["EMA_50"].iloc[i-1]
+                prev_200 = df_last_30["EMA_200"].iloc[i-1]
+                curr_50 = df_last_30["EMA_50"].iloc[i]
+                curr_200 = df_last_30["EMA_200"].iloc[i]
+
+                if prev_50 >= prev_200 and curr_50 < curr_200:
+                    result["has_death_cross"] = True
+                    result["death_cross_label"] = "☠️ <b>Warning! เกิด Death Cross (1D) ในช่วง 1 เดือนที่ผ่านมา</b> (เทรนด์หลักอาจเปลี่ยนเป็นขาลงยาว)"
+                    break
+    except Exception as e:
+        logger.warning(f"Error checking Death Cross for {coin}: {e}")
+        
+    return result
+
+def analyze_futures_context(coin: str) -> dict:
+    """
+    ดึงข้อมูล Futures จาก Binance API ย้อนหลัง 1 เดือน (Open Interest & Funding Rate)
+    """
+    result = {
+        "futures_warning": False,
+        "futures_label": "📊 Futures (1M): ปกติ / ไม่มีข้อมูล"
+    }
+    symbol = f"{coin}USDT"
+    
+    try:
+        oi_url = "https://fapi.binance.com/futures/data/openInterestHist"
+        oi_params = {"symbol": symbol, "period": "1d", "limit": 30}
+        oi_resp = requests.get(oi_url, params=oi_params, timeout=10)
+
+        fr_url = "https://fapi.binance.com/fapi/v1/fundingRate"
+        fr_params = {"symbol": symbol, "limit": 90}
+        fr_resp = requests.get(fr_url, params=fr_params, timeout=10)
+
+        if oi_resp.status_code == 200 and fr_resp.status_code == 200:
+            oi_data = oi_resp.json()
+            fr_data = fr_resp.json()
+
+            if len(oi_data) >= 2 and len(fr_data) > 0:
+                first_oi = float(oi_data[0]['sumOpenInterestValue'])
+                last_oi = float(oi_data[-1]['sumOpenInterestValue'])
+                oi_change_pct = ((last_oi - first_oi) / first_oi) * 100 if first_oi > 0 else 0
+
+                avg_funding = sum([float(x['fundingRate']) for x in fr_data]) / len(fr_data)
+                avg_funding_pct = avg_funding * 100
+
+                if oi_change_pct > 25.0 and avg_funding_pct > 0.015:
+                    result["futures_warning"] = True
+                    result["futures_label"] = f"🚨 <b>Futures Warning: ระวัง Long Squeeze!</b> OI พุ่ง {oi_change_pct:.1f}% พร้อม Funding Rate เฉลี่ยบวกเดือด ({avg_funding_pct:.4f}%) ตลาดเสี่ยงดัมพ์กวาด Long"
+                elif oi_change_pct > 25.0 and avg_funding_pct < -0.015:
+                    result["futures_warning"] = True
+                    result["futures_label"] = f"🚨 <b>Futures Warning: ระวัง Short Squeeze!</b> OI พุ่ง {oi_change_pct:.1f}% แต่ Funding Rate ติดลบหนัก ({avg_funding_pct:.4f}%) ตลาดเสี่ยงปั๊มสวน"
+                else:
+                    result["futures_label"] = f"📊 Futures (1M): ปกติ (OI เปลี่ยน {oi_change_pct:+.1f}%, FR {avg_funding_pct:.4f}%)"
+                    
+    except Exception:
+        pass
+
+    return result
 
 def calculate_indicators(df: pd.DataFrame) -> pd.DataFrame:
     close = df["close"]
@@ -670,8 +746,10 @@ def scan_market():
         weekly_ctx = analyze_weekly_context(coin)
         monthly_ctx = analyze_monthly_targets(coin)
         cycle_ctx = analyze_cycle_targets(coin)
-        onchain_ctx = analyze_onchain_momentum(coin) # เรียกใช้ฟังก์ชันวิเคราะห์ On-Chain ล่วงหน้า 1 เดือน
-        time.sleep(API_RATE_LIMIT_DELAY) # เพิ่มหน่วงเวลาเล็กน้อยป้องกัน Rate Limit จากการเพิ่ม Endpoint
+        onchain_ctx = analyze_onchain_momentum(coin) 
+        death_cross_ctx = check_death_cross_1d(coin) 
+        futures_ctx = analyze_futures_context(coin)  
+        time.sleep(API_RATE_LIMIT_DELAY) 
         
         df = calculate_indicators(df)
         row = df.iloc[-1]
@@ -749,7 +827,6 @@ def scan_market():
                 elif is_divergence: signal_type = f"Macro Support Divergence (สวนเทรนด์) 📈{vol_tag}"
 
         if signal_type:
-            # 🔴 คอนเฟิร์มเพิ่ม: วาฬแอบรินขายล่วงหน้าหรือไม่ ถ้าใช่ ให้แทรกสถานะเตือนความเสี่ยงเพิ่มนำหน้าทันที
             if onchain_ctx.get("onchain_warning"):
                 signal_type = f"⚠️ ปัจจัย On-Chain เสี่ยงสูง + {signal_type}"
 
@@ -788,6 +865,8 @@ def scan_market():
                 "vol_confirmed": vol_confirmed,
                 "trend_info": trend_info, "bounce_info": bounce_info, "ob_info": ob_info, "fvg_info": fvg_info,
                 "weekly_ctx": weekly_ctx, "monthly_ctx": monthly_ctx, "cycle_ctx": cycle_ctx, "onchain_ctx": onchain_ctx,
+                "death_cross_ctx": death_cross_ctx, 
+                "futures_ctx": futures_ctx,         
                 "corr_btc": corr_btc, "squeeze_warning": squeeze_warning, "adx": round(adx, 2),
                 "pos_size": f"${position_size_usdt:.2f}", "sl_risk_pct": f"{sl_distance_pct*100:.1f}%"
             })
@@ -839,7 +918,9 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
 
             ti, bi, ob, fvg = opt["trend_info"], opt["bounce_info"], opt["ob_info"], opt["fvg_info"]
             w_ctx, m_ctx, c_ctx = opt.get("weekly_ctx", {}), opt.get("monthly_ctx", {}), opt.get("cycle_ctx", {})
-            onchain_ctx = opt.get("onchain_ctx", {}) # ดึงข้อมูล On-Chain context ออกมาแสดงผล
+            onchain_ctx = opt.get("onchain_ctx", {})
+            dc_ctx = opt.get("death_cross_ctx", {}) 
+            ft_ctx = opt.get("futures_ctx", {})     
 
             confluence_report = "\n🛡️ <b>การทดสอบแนวรับสถาบัน:</b>"
             if w_ctx and w_ctx.get("fibo_618"):
@@ -856,7 +937,9 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
             trend_block = f"\n📐 <b>แนวโน้ม (4H):</b> {ti['trend_label']}"
             bounce_block = f"\n🔄 <b>RSI Bounce Check:</b> {bi['quality_label']}" + (f"\n   {bi['entry_timing']}" if bi["entry_timing"] else "")
             weekly_block = f"\n🗓️ <b>ภาพรวมระดับสัปดาห์ (1W):</b> {w_ctx['weekly_status_label']}" if w_ctx and w_ctx.get("rsi_weekly") else ""
-            onchain_block = f"\n📊 <b>ข้อมูล On-Chain เชิงลึก:</b>\n   {onchain_ctx.get('onchain_label', '')}" if onchain_ctx else "" # นำมาจัดกลุ่มบล็อกเพื่อสแกนด้วยสายตาได้ง่าย
+            onchain_block = f"\n📊 <b>ข้อมูล On-Chain เชิงลึก:</b>\n   {onchain_ctx.get('onchain_label', '')}" if onchain_ctx else ""
+            death_cross_block = f"\n   {dc_ctx.get('death_cross_label', '')}" if dc_ctx and dc_ctx.get("has_death_cross") else ""
+            futures_block = f"\n   {ft_ctx.get('futures_label', '')}" if ft_ctx else ""
             monthly_block = f"\n🔮 <b>กรอบเป้าหมาย (1M):</b>\n   🔼 โซนเป้าหมายขึ้น: <code>${format_price(m_ctx['m_resistance_target'])}</code>\n   🔽 แนวรับถัดไป: <code>${format_price(m_ctx['m_support_target'])}</code>" if m_ctx and m_ctx.get("m_resistance_target") else ""
             cycle_block = f"\n{c_ctx['cycle_summary_label']}" if c_ctx and c_ctx.get("cycle_target_zone") else ""
 
@@ -874,6 +957,8 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
                 f"{bounce_block}"
                 f"{weekly_block}"
                 f"{onchain_block}"
+                f"{death_cross_block}" 
+                f"{futures_block}"     
                 f"{monthly_block}"
                 f"{cycle_block}"
                 f"\n\n🛡️ <b>[Risk Management]</b>"
@@ -937,7 +1022,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
 # Main Execution Block
 # ==========================================
 if __name__ == "__main__":
-    logger.info("เริ่มต้นใช้งาน Crypto Screener (SMC + Risk Management + 1M On-Chain Integration)...")
+    logger.info("เริ่มต้นใช้งาน Crypto Screener (SMC + Risk Management + 1M On-Chain Integration + Death Cross + Futures Data)...")
 
     buy_list, sell_list, market_summary = scan_market()
     logger.info(f"สแกนระบบเสร็จสมบูรณ์ → พบสัญญาณซื้อคุณภาพ: {len(buy_list)} ตัว | พบสัญญาณขาย: {len(sell_list)} ตัว")
