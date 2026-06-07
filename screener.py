@@ -370,6 +370,59 @@ def analyze_cycle_targets(coin: str) -> dict:
         pass
     return result
 
+
+# --- เพิ่มฟังก์ชันวิเคราะห์ข้อมูล On-Chain ย้อนหลัง 1 เดือน ---
+def analyze_onchain_momentum(coin: str) -> dict:
+    """
+    วิเคราะห์ข้อมูล On-Chain ย้อนหลัง 30 วัน เพื่อตรวจสอบแรงกดดันและพฤติกรรมวาฬล่วงหน้า 1 เดือน
+    """
+    url = "https://min-api.cryptocompare.com/data/blockchain/histo/day"
+    params = {
+        "fsym": coin,
+        "limit": 30,
+        "api_key": CRYPTOCOMPARE_API_KEY
+    }
+    
+    result = {
+        "onchain_warning": False,
+        "onchain_label": "🔹 On-Chain (1M): ปกติ (วาฬยังไม่มีพฤติกรรมผิดปกติ)",
+        "large_tx_change_pct": 0.0
+    }
+    
+    try:
+        resp = requests.get(url, params=params, timeout=15)
+        data = resp.json()
+        
+        if data.get("Response") == "Success" and data.get("Data") and isinstance(data["Data"].get("Data"), list):
+            df_onchain = pd.DataFrame(data["Data"]["Data"])
+            if len(df_onchain) >= 15:
+                # ค้นหาคอลัมน์ธุรกรรมกระเป๋าวาฬหรือธุรกรรมรวมตาม Schema ของ CryptoCompare
+                tx_col = None
+                for col in ['large_transaction_count', 'transaction_count', 'zero_balance_addresses_all_time']:
+                    if col in df_onchain.columns:
+                        tx_col = col
+                        break
+                
+                if tx_col:
+                    recent_avg = df_onchain[tx_col].iloc[-5:].mean()   # ค่าเฉลี่ย 5 วันล่าสุด
+                    prior_avg = df_onchain[tx_col].iloc[-30:-5].mean() # ค่าเฉลี่ยช่วง 1 เดือนก่อนหน้า
+                    
+                    if prior_avg > 0:
+                        change_pct = ((recent_avg - prior_avg) / prior_avg) * 100
+                        result["large_tx_change_pct"] = round(change_pct, 2)
+                        
+                        # 🔴 หากปริมาณธุรกรรมใหญ่พุ่งขึ้นเกิน 40% ในขณะที่ราคากองอยู่แนวรับ แปลว่าเสี่ยงหลุดหลุมสูงมาก
+                        if change_pct > 40.0:
+                            result["onchain_warning"] = True
+                            result["onchain_label"] = f"🚨 <b>On-Chain Warning (1M): วาฬเคลื่อนไหวผิดปกติ!</b> มีปริมาณธุรกรรมยักษ์เพิ่มขึ้น {change_pct:.1f}% ในช่วงนี้ (ระวังแรงเทขายทุบทะลุแนวรับสถาบัน)"
+                        else:
+                            result["onchain_label"] = f"🔹 On-Chain (1M): ปกติ (ปริมาณธุรกรรมวาฬเปลี่ยนแปลง {change_pct:+.1f}%)"
+    except Exception as e:
+        logger.warning(f"ไม่สามารถตรวจสอบข้อมูล On-Chain ของ {coin} ได้: {e}")
+        
+    return result
+
+
 def calculate_indicators(df: pd.DataFrame) -> pd.DataFrame:
     close = df["close"]
     high = df["high"]
@@ -617,6 +670,8 @@ def scan_market():
         weekly_ctx = analyze_weekly_context(coin)
         monthly_ctx = analyze_monthly_targets(coin)
         cycle_ctx = analyze_cycle_targets(coin)
+        onchain_ctx = analyze_onchain_momentum(coin) # เรียกใช้ฟังก์ชันวิเคราะห์ On-Chain ล่วงหน้า 1 เดือน
+        time.sleep(API_RATE_LIMIT_DELAY) # เพิ่มหน่วงเวลาเล็กน้อยป้องกัน Rate Limit จากการเพิ่ม Endpoint
         
         df = calculate_indicators(df)
         row = df.iloc[-1]
@@ -694,6 +749,10 @@ def scan_market():
                 elif is_divergence: signal_type = f"Macro Support Divergence (สวนเทรนด์) 📈{vol_tag}"
 
         if signal_type:
+            # 🔴 คอนเฟิร์มเพิ่ม: วาฬแอบรินขายล่วงหน้าหรือไม่ ถ้าใช่ ให้แทรกสถานะเตือนความเสี่ยงเพิ่มนำหน้าทันที
+            if onchain_ctx.get("onchain_warning"):
+                signal_type = f"⚠️ ปัจจัย On-Chain เสี่ยงสูง + {signal_type}"
+
             if weekly_ctx.get("weekly_bullish_div"): signal_type = f"⭐ {signal_type} + [1W Bullish Divergence แม่นยำสูง]"
             elif weekly_ctx.get("rsi_weekly") and weekly_ctx["rsi_weekly"] <= 35: signal_type = f"💎 {signal_type} + [1W คอนเฟิร์มโซนก้นหลุมสัปดาห์]"
             elif monthly_ctx.get("monthly_trend") == "bullish" and in_fvg_zone: signal_type = f"🔥 {signal_type} + [1M มหาเทรนด์หนุน + FVG เติมเต็ม]"
@@ -728,7 +787,7 @@ def scan_market():
                 "sl": f"${format_price(sl_val)}",
                 "vol_confirmed": vol_confirmed,
                 "trend_info": trend_info, "bounce_info": bounce_info, "ob_info": ob_info, "fvg_info": fvg_info,
-                "weekly_ctx": weekly_ctx, "monthly_ctx": monthly_ctx, "cycle_ctx": cycle_ctx,
+                "weekly_ctx": weekly_ctx, "monthly_ctx": monthly_ctx, "cycle_ctx": cycle_ctx, "onchain_ctx": onchain_ctx,
                 "corr_btc": corr_btc, "squeeze_warning": squeeze_warning, "adx": round(adx, 2),
                 "pos_size": f"${position_size_usdt:.2f}", "sl_risk_pct": f"{sl_distance_pct*100:.1f}%"
             })
@@ -780,6 +839,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
 
             ti, bi, ob, fvg = opt["trend_info"], opt["bounce_info"], opt["ob_info"], opt["fvg_info"]
             w_ctx, m_ctx, c_ctx = opt.get("weekly_ctx", {}), opt.get("monthly_ctx", {}), opt.get("cycle_ctx", {})
+            onchain_ctx = opt.get("onchain_ctx", {}) # ดึงข้อมูล On-Chain context ออกมาแสดงผล
 
             confluence_report = "\n🛡️ <b>การทดสอบแนวรับสถาบัน:</b>"
             if w_ctx and w_ctx.get("fibo_618"):
@@ -796,6 +856,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
             trend_block = f"\n📐 <b>แนวโน้ม (4H):</b> {ti['trend_label']}"
             bounce_block = f"\n🔄 <b>RSI Bounce Check:</b> {bi['quality_label']}" + (f"\n   {bi['entry_timing']}" if bi["entry_timing"] else "")
             weekly_block = f"\n🗓️ <b>ภาพรวมระดับสัปดาห์ (1W):</b> {w_ctx['weekly_status_label']}" if w_ctx and w_ctx.get("rsi_weekly") else ""
+            onchain_block = f"\n📊 <b>ข้อมูล On-Chain เชิงลึก:</b>\n   {onchain_ctx.get('onchain_label', '')}" if onchain_ctx else "" # นำมาจัดกลุ่มบล็อกเพื่อสแกนด้วยสายตาได้ง่าย
             monthly_block = f"\n🔮 <b>กรอบเป้าหมาย (1M):</b>\n   🔼 โซนเป้าหมายขึ้น: <code>${format_price(m_ctx['m_resistance_target'])}</code>\n   🔽 แนวรับถัดไป: <code>${format_price(m_ctx['m_support_target'])}</code>" if m_ctx and m_ctx.get("m_resistance_target") else ""
             cycle_block = f"\n{c_ctx['cycle_summary_label']}" if c_ctx and c_ctx.get("cycle_target_zone") else ""
 
@@ -812,6 +873,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
                 f"{trend_block}"
                 f"{bounce_block}"
                 f"{weekly_block}"
+                f"{onchain_block}"
                 f"{monthly_block}"
                 f"{cycle_block}"
                 f"\n\n🛡️ <b>[Risk Management]</b>"
@@ -875,7 +937,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
 # Main Execution Block
 # ==========================================
 if __name__ == "__main__":
-    logger.info("เริ่มต้นใช้งาน Crypto Screener (SMC + Risk Management Full Armor)...")
+    logger.info("เริ่มต้นใช้งาน Crypto Screener (SMC + Risk Management + 1M On-Chain Integration)...")
 
     buy_list, sell_list, market_summary = scan_market()
     logger.info(f"สแกนระบบเสร็จสมบูรณ์ → พบสัญญาณซื้อคุณภาพ: {len(buy_list)} ตัว | พบสัญญาณขาย: {len(sell_list)} ตัว")
