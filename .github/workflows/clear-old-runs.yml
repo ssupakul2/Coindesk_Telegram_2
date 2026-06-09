@@ -3,7 +3,7 @@ name: Clear Old Workflow Runs
 on:
   workflow_dispatch: 
   schedule:
-    - cron: '0 0 * * 0' # ทำงานอัตโนมัติทุกๆ วันอาทิตย์ เวลา 07:00 น. เวลาไทย (UTC 00:00)
+    - cron: '0 0 * * 0,3' # ทำงานอัตโนมัติทุกๆ วันอาทิตย์ เวลา 07:00 น. เวลาไทย (UTC 00:00)
 
 jobs:
   clear-runs:
