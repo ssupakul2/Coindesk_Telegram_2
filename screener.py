@@ -26,7 +26,7 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 CRYPTOCOMPARE_API_KEY = os.getenv("CRYPTOCOMPARE_API_KEY")
 
 PORTFOLIO_USDT = 1500.0   
-RISK_PER_TRADE_PCT = 2.0  # ความเสี่ยงมาตรฐานต่อไม้ในภาวะตลาดปกติ
+RISK_PER_TRADE_PCT = 2.0  
 
 COINS = [
     "BTC", "ETH", "BNB", "SOL", "XRP",
@@ -75,7 +75,7 @@ OB_LOOKBACK = 20
 OB_IMBALANCE_RATIO = 1.5      
 FVG_THRESHOLD_PCT = 0.2       
 
-# --- Take Profit & Risk Control Tiers ---
+# --- Take Profit Tiers ---
 TP_TIERS = {
     "major":  {"tp1": 0.10, "tp2": 0.15, "sl_buffer": 0.025},
     "mid":    {"tp1": 0.15, "tp2": 0.20, "sl_buffer": 0.050},
@@ -92,7 +92,7 @@ COIN_TIER = {
 }
 
 # ==========================================
-# Optimization: Global API Session Setup & Anti-Bot Headers
+# Optimization 1: Global API Session Setup & Anti-Bot Headers
 # ==========================================
 api_session = requests.Session()
 api_session.headers.update({
@@ -201,7 +201,7 @@ def get_histoday_data(coin: str) -> pd.DataFrame | None:
     return None
 
 # ==========================================
-# Sub-functions for Multi-Timeframe Context
+# Optimization 2: Refactored Sub-functions to accept 1D DataFrame
 # ==========================================
 def analyze_weekly_context(df_1d: pd.DataFrame) -> dict:
     result = {
@@ -416,7 +416,6 @@ def check_death_cross_1d(df_1d: pd.DataFrame) -> dict:
     return result
 
 def analyze_onchain_momentum(coin: str) -> dict:
-    # สำหรับเหรียญใหญ่หรือป้องกันโหลด สามารถรันได้ปกติ แนะนำใช้ข้อมูล 30 วัน
     url = "https://min-api.cryptocompare.com/data/blockchain/histo/day"
     params = {
         "fsym": coin,
@@ -460,6 +459,9 @@ def analyze_onchain_momentum(coin: str) -> dict:
         
     return result
 
+# ==========================================
+# Optimization 3: Refactored Futures context with Bulk Funding Rate
+# ==========================================
 def analyze_futures_context(coin: str, bulk_funding_rate: float | None) -> dict:
     """วิเคราะห์ข้อมูลฟิวเจอร์ส โดยลดการเรียก API Funding Rate รายตัวสลับไปใช้ข้อมูลชุด Bulk ล่าสุดแทน"""
     result = {
@@ -469,6 +471,7 @@ def analyze_futures_context(coin: str, bulk_funding_rate: float | None) -> dict:
     symbol = f"{coin}USDT"
     
     try:
+        # Open Interest ยังคงต้องยิงแยกเนื่องจากไม่มีจุดดึงภาพรวมย้อนหลังแบบ Bulk ใน API พื้นฐาน
         oi_url = "https://fapi.binance.com/futures/data/openInterestHist"
         oi_params = {"symbol": symbol, "period": "1d", "limit": 30}
         oi_resp = api_session.get(oi_url, params=oi_params, timeout=10)
@@ -480,6 +483,8 @@ def analyze_futures_context(coin: str, bulk_funding_rate: float | None) -> dict:
                 first_oi = float(oi_data[0]['sumOpenInterestValue'])
                 last_oi = float(oi_data[-1]['sumOpenInterestValue'])
                 oi_change_pct = ((last_oi - first_oi) / first_oi) * 100 if first_oi > 0 else 0
+
+                # แปลงค่า Funding Rate เป็นเปอร์เซ็นต์
                 funding_pct = bulk_funding_rate * 100
 
                 if oi_change_pct > 25.0 and funding_pct > 0.015:
@@ -497,7 +502,7 @@ def analyze_futures_context(coin: str, bulk_funding_rate: float | None) -> dict:
     return result
 
 # ==========================================
-# Indicators & Smart Money Advanced Core Logic
+# Indicators & Technical Logic Calculations
 # ==========================================
 def calculate_indicators(df: pd.DataFrame) -> pd.DataFrame:
     close = df["close"]
@@ -572,31 +577,6 @@ def estimate_price_for_target_rsi(df: pd.DataFrame, target_rsi: float = 70.0, pe
         required_avg_loss = next_avg_gain / target_rs
         required_loss = max(0, (required_avg_loss * period) - (avg_loss * (period - 1)))
         return curr_price - required_loss
-
-def check_liquidity_sweep(df: pd.DataFrame, lookback: int = 20) -> dict:
-    """ตรวจจับการกวาดสภาพคล่อง (Liquidity Sweep) แทงไส้ล่างกิน Stop loss ของแนวรับอดีตแล้วดึงกลับทันที"""
-    result = {"is_sweep": False, "sweep_label": ""}
-    if len(df) < lookback + 2:
-        return result
-    
-    curr_low = df["low"].iloc[-1]
-    curr_close = df["close"].iloc[-1]
-    curr_open = df["open"].iloc[-1]
-    
-    past_lows = df["low"].iloc[-(lookback+1):-1]
-    min_past_low = past_lows.min()
-    
-    # เงื่อนไข: ราคาหลุดจุดต่ำสุดเก่า แต่ดีดขึ้นปิดเหนือแนวรับสำคัญได้ (สร้างไส้ล่างยาว)
-    if curr_low < min_past_low and curr_close > min_past_low:
-        candle_bottom = min(curr_close, curr_open)
-        lower_wick = candle_bottom - curr_low
-        body = abs(curr_close - curr_open)
-        
-        if lower_wick > body * 1.5:  # ไส้ล่างยาวกว่าเนื้อเทียน 1.5 เท่าขึ้นไป (Rejection แข็งแกร่ง)
-            result["is_sweep"] = True
-            result["sweep_label"] = f"🐋 <b>Liquidity Sweep (ล่าสภาพคล่องสถาบัน):</b> ราคาแทงไส้ทะลุแนว Low เดิม (${format_price(min_past_low)}) แล้วดึงกลับทันที! จุดกลับตัวความแม่นยำสูง"
-            
-    return result
 
 def find_fair_value_gaps(df: pd.DataFrame) -> dict:
     fvg_result = {"has_fvg_support": False, "fvg_top": None, "fvg_bottom": None}
@@ -749,29 +729,19 @@ def scan_market():
     bullish_coins, bearish_coins, total_valid_coins = 0, 0, 0
     coin_trends_summary = []
 
-    # --- 1. Optimization & Security: Fetch Master Macro Regime (BTC 1D & 4H) ---
-    logger.info("ดึงข้อมูลดัชนีตลาดภาพใหญ่ (BTC 1D & 4H) เพื่อลดปัญหา API ยิงซ้ำย่อยในลูป...")
-    btc_df_daily = get_histoday_data("BTC")
-    time.sleep(API_RATE_LIMIT_DELAY)
+    # --- 1. Fetch Baseline Market Data (BTC) ---
+    logger.info("ดึงข้อมูลดัชนีตลาด (BTC) เพื่อวิเคราะห์ Market Regime & Correlation...")
     btc_df = get_historical_data("BTC")
-    time.sleep(API_RATE_LIMIT_DELAY)
-
-    macro_bullish = True
     market_regime = "Unknown ⚪"
-    
-    if btc_df_daily is not None:
-        btc_df_daily["EMA_200"] = btc_df_daily["close"].ewm(span=200, adjust=False).mean()
-        btc_daily_price = btc_df_daily["close"].iloc[-1]
-        btc_daily_ema200 = btc_df_daily["EMA_200"].iloc[-1]
-        macro_bullish = btc_daily_price > btc_daily_ema200
-        market_regime = "Bull Market 🟢 (BTC > 1D EMA200)" if macro_bullish else "Bear Market 🔴 (BTC < 1D EMA200)"
-    elif btc_df is not None:
+    if btc_df is not None:
         btc_df = calculate_indicators(btc_df)
-        macro_bullish = btc_df["close"].iloc[-1] > btc_df["EMA_200"].iloc[-1]
-        market_regime = "Bull Market 🟢 (4H Fallback)" if macro_bullish else "Bear Market 🔴 (4H Fallback)"
+        btc_price = btc_df["close"].iloc[-1]
+        btc_ema200 = btc_df["EMA_200"].iloc[-1]
+        # แก้ไขบรรทัดนี้: เปลี่ยนเครื่องหมายเปรียบเทียบในข้อความเป็นคำอธิบายภาษาไทย ป้องกัน HTML Parsing Error ใน Telegram
+        market_regime = "Bull Market 🟢 (BTC ยืนเหนือ 4H EMA200)" if btc_price > btc_ema200 else "Bear Market 🔴 (BTC หลุด 4H EMA200)"
 
-    # --- 2. Bulk Fetch Binance Funding Rate ---
-    logger.info("ดึงข้อมูล Bulk Funding Rate จาก Binance เพื่อประหยัด API Requests...")
+    # --- 2. Optimization 3: Bulk Fetch Binance Funding Rate ---
+    logger.info("ดึงข้อมูล Bulk Funding Rate จาก Binance (ยิงครั้งเดียวประหยัดพลังงาน)...")
     funding_map = {}
     try:
         pi_url = "https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -789,12 +759,9 @@ def scan_market():
     for coin in COINS:
         logger.info(f"กำลังประมวลผลเหรียญ: {coin}...")
         
-        # API Check Optimization: ดึงข้อมูลจาก Cache หากเป็น BTC ป้องกันโดน Limit Rate
-        if coin == "BTC" and btc_df_daily is not None:
-            df_daily = btc_df_daily.copy()
-        else:
-            df_daily = get_histoday_data(coin)
-            time.sleep(API_RATE_LIMIT_DELAY)
+        # --- Optimization 2: ดึง 1D ครั้งเดียว จ่ายแจกให้ฟังก์ชันลูก ---
+        df_daily = get_histoday_data(coin)
+        time.sleep(API_RATE_LIMIT_DELAY)
         
         if df_daily is not None:
             weekly_ctx = analyze_weekly_context(df_daily)
@@ -802,16 +769,15 @@ def scan_market():
             cycle_ctx = analyze_cycle_targets(df_daily)
             death_cross_ctx = check_death_cross_1d(df_daily)
         else:
+            # Fallbacks ถ้าข้อมูลขาดหาย
             weekly_ctx = {"rsi_weekly": None, "weekly_bullish_div": False, "weekly_status_label": "↔️ ไม่พบข้อมูลระบุระดับสัปดาห์ชัดเจน", "fibo_618": None, "fibo_786": None, "fibo_886": None, "liquidity_pool": None, "psycho_support": None}
             monthly_ctx = {"m_resistance_target": None, "m_support_target": None, "monthly_summary_label": "⏳ ไม่สามารถคำนวณเป้าหมายระดับเดือนได้", "monthly_trend": "sideways"}
             cycle_ctx = {"cycle_target_zone": None, "cycle_confluence_factors": [], "cycle_summary_label": "⏳ ไม่สามารถวิเคราะห์เป้าหมายไซเคิลได้"}
-            death_cross_ctx = {"has_death_cross": False, "death_cross_label": "⚪ 1D Death Cross: ปลอดภัย"}
+            death_cross_ctx = {"has_death_cross": False, "death_cross_label": "⚪ 1D Death Cross: ปลอดภัย (ยังไม่เกิดการตัดลง)"}
 
-        if coin == "BTC" and btc_df is not None:
-            df = btc_df.copy()
-        else:
-            df = get_historical_data(coin)
-            time.sleep(API_RATE_LIMIT_DELAY)
+        # ดึง 4H มาคำนวณ Indicator ประจำแท่งหลัก
+        df = get_historical_data(coin)
+        time.sleep(API_RATE_LIMIT_DELAY)
 
         if df is None or len(df) < EMA_LONG + 10:
             logger.warning(f"{coin}: ข้อมูลไม่พอสำหรับ Indicators 4H – ข้ามเหรียญนี้")
@@ -820,6 +786,7 @@ def scan_market():
         onchain_ctx = analyze_onchain_momentum(coin) 
         time.sleep(API_RATE_LIMIT_DELAY) 
         
+        # ค้นหาค่าและประกอบข้อมูลฟิวเจอร์สจากชุดข้อมูล Bulk
         symbol_futures = f"{coin}USDT"
         current_fr = funding_map.get(symbol_futures, None)
         futures_ctx = analyze_futures_context(coin, current_fr)
@@ -838,7 +805,8 @@ def scan_market():
         
         corr_btc = calculate_correlation(df, btc_df) if coin != "BTC" else 1.0
         squeeze_warning = adx < 20
-        
+        trailing_stop_val = current_price - (atr * ATR_MULTIPLIER)
+
         total_valid_coins += 1
         is_divergence = check_bullish_divergence(df)
         rsi_rounded = round(rsi, 2)
@@ -847,7 +815,6 @@ def scan_market():
         bounce_info = analyze_rsi_bounce(df)
         ob_info = find_order_blocks(df)
         fvg_info = find_fair_value_gaps(df)
-        sweep_info = check_liquidity_sweep(df) # เรียกใช้ระบบดักกินวอลุ่มสถาบัน
 
         dynamic_tp_ob = estimate_price_for_target_rsi(df, target_rsi=70.0)
 
@@ -875,69 +842,54 @@ def scan_market():
 
         signal_type = ""
 
-        # --- ประเมินสัญญาณฝั่งซื้ออ้างอิงสภาวะตลาดรวมเพื่อลด drawdown ---
         if current_price > ema_200:
             coin_trend = "🟢 ขาขึ้น (Above EMA 200)"
             bullish_coins += 1
             coin_trends_summary.append(f"• {coin}: 🟢 ขาขึ้น (RSI 4H: {rsi_rounded}) | {trend_info['trend_label']}")
 
-            if macro_bullish:  # คอนเฟิร์มภาพใหญ่ซื้อได้อย่างปลอดภัย
-                if sweep_info["is_sweep"]: signal_type = f"Institution Liquidity Sweep 🐋{vol_tag}"
-                elif in_fibo_zone or in_4h_fibo_zone or in_ob_zone or in_fvg_zone:
-                    if current_price > (ema_50 * 0.98) and (rsi <= RSI_OVERSOLD or rsi <= RSI_PULLBACK_THRESHOLD):
-                        if bounce_info["quality"] in ["strong", "moderate"]: signal_type = f"Institution Dip & Rebound 📉{vol_tag}"
-                        elif rsi <= RSI_OVERSOLD: signal_type = f"Golden Fib / OB Zone Oversold 📉{vol_tag}"
-                            
-                    if is_divergence and not signal_type: signal_type = f"Confluence Bullish Divergence 📈{vol_tag}"
-                    if ob_info["has_bullish_ob"] and not signal_type: signal_type = f"Smart Money OB Reversal 🚀{vol_tag}"
+            if in_fibo_zone or in_4h_fibo_zone or in_ob_zone or in_fvg_zone:
+                if current_price > (ema_50 * 0.98) and (rsi <= RSI_OVERSOLD or rsi <= RSI_PULLBACK_THRESHOLD):
+                    if bounce_info["quality"] in ["strong", "moderate"]: signal_type = f"Institution Dip & Rebound 📉{vol_tag}"
+                    elif rsi <= RSI_OVERSOLD: signal_type = f"Golden Fib / OB Zone Oversold 📉{vol_tag}"
+                        
+                if is_divergence and not signal_type: signal_type = f"Confluence Bullish Divergence 📈{vol_tag}"
+                if ob_info["has_bullish_ob"] and not signal_type: signal_type = f"Smart Money OB Reversal 🚀{vol_tag}"
+
         else:
             coin_trend = "🔴 ขาลง (Below EMA 200)"
             bearish_coins += 1
             coin_trends_summary.append(f"• {coin}: 🔴 ขาลง (RSI 4H: {rsi_rounded}) | {trend_info['trend_label']}")
 
-            # ในตลาดหมีหรือใต้เส้น EMA 200 จะเปิดซื้อเฉพาะจุดกลับตัวลึกพิเศษที่มีโครงสร้างค้ำอยู่เท่านั้น ป้องกันการติดดอยยาว
             if in_deep_support and is_divergence: signal_type = f"🚨 DEEP REVERSAL (Liquidity/Fibo 78.6-88.6) + Bullish Div 🐳{vol_tag}"
-            elif in_deep_support and bounce_info["quality"] == "strong": signal_type = f"🛡️ Deep Support Strong Bounce (รันสั้นในกรอบ) 📉{vol_tag}"
-            elif sweep_info["is_sweep"] and in_deep_support: signal_type = f"Bear Market Liquidity Sweep 🐳{vol_tag}"
+            elif in_deep_support and bounce_info["quality"] == "strong": signal_type = f"🛡️ Deep Support Strong Bounce (รอคอนเฟิร์มเทรนด์) 📉{vol_tag}"
+            elif in_fibo_zone or in_ob_zone:
+                if rsi <= RSI_OVERSOLD: signal_type = f"Deep Retracement Buy (เสี่ยงสูง) 📉{vol_tag}"
+                elif is_divergence: signal_type = f"Macro Support Divergence (สวนเทรนด์) 📈{vol_tag}"
 
         if signal_type:
-            # คัดกรองเพิ่มเติมจากสัญญาณภาพรวมอินดิเคเตอร์ย่อย
             if onchain_ctx.get("onchain_warning"):
                 signal_type = f"⚠️ ปัจจัย On-Chain เสี่ยงสูง + {signal_type}"
 
-            if weekly_ctx.get("weekly_bullish_div"): signal_type = f"⭐ {signal_type} + [1W Bullish Divergence ภาพใหญ่มาก]"
-            elif weekly_ctx.get("rsi_weekly") and weekly_ctx["rsi_weekly"] <= 35: signal_type = f"💎 {signal_type} + [1W คอนเฟิร์มโซนก้นหลุมระดับสัปดาห์]"
-            elif monthly_ctx.get("monthly_trend") == "bullish" and in_fvg_zone: signal_type = f"🔥 {signal_type} + [1M มหาเทรนด์หนุน + FVG ค้ำราคา]"
+            if weekly_ctx.get("weekly_bullish_div"): signal_type = f"⭐ {signal_type} + [1W Bullish Divergence แม่นยำสูง]"
+            elif weekly_ctx.get("rsi_weekly") and weekly_ctx["rsi_weekly"] <= 35: signal_type = f"💎 {signal_type} + [1W คอนเฟิร์มโซนก้นหลุมสัปดาห์]"
+            elif monthly_ctx.get("monthly_trend") == "bullish" and in_fvg_zone: signal_type = f"🔥 {signal_type} + [1M มหาเทรนด์หนุน + FVG เติมเต็ม]"
 
             entry_min = format_price(current_price * 0.98)
             entry_max = format_price(current_price * 1.01)
             target_tp1 = current_price * (1 + tp1_pct)
             target_tp2 = current_price * (1 + tp2_pct)
             
-            # --- UPGRADED: Structural Hard Stop Loss Logic (คัทลอสสั้น สะท้อนโครงสร้างจริง) ---
-            if ob_info["has_bullish_ob"]:
-                sl_val = ob_info["bullish_ob_price"] - (0.3 * atr)
-            elif fvg_info["has_fvg_support"]:
-                sl_val = fvg_info["fvg_bottom"] - (0.3 * atr)
-            else:
-                sl_val = df["low"].iloc[-15:].min() - (0.5 * atr) # ดึง Swing low ย้อนหลังสั้นๆ แทนเปอร์เซ็นต์ลึกๆ
+            sl_reference = ema_200
+            if in_deep_support and weekly_ctx.get("fibo_886"): sl_reference = weekly_ctx["fibo_886"]
+            elif ob_info["has_bullish_ob"]: sl_reference = ob_info["bullish_ob_price"]
+            elif fvg_info["has_fvg_support"]: sl_reference = fvg_info["fvg_bottom"]
             
-            # ป้องกันความปลอดภัยสูงสุดขอบชั้นสุดท้าย หากโครงสร้างลึกเกินเกณฑ์ Buffer ที่คุมไว้ให้ดึงขึ้นมาจุดที่ปลอดภัย
-            max_allowed_sl = current_price * (1 - sl_buf)
-            if sl_val < max_allowed_sl:
-                sl_val = max_allowed_sl
-
-            # ค่า Trailing Stop คำนวณแบบยืดหยุ่นตาม ATR
-            trailing_stop_val = current_price - (atr * ATR_MULTIPLIER)
+            sl_val = sl_reference * (1 - sl_buf) if current_price > sl_reference else current_price * (1 - sl_buf)
             
-            # --- Position Sizing Risk Control Mapping ---
+            # --- Position Sizing Calculation ---
             sl_distance_pct = (current_price - sl_val) / current_price
             if sl_distance_pct <= 0: sl_distance_pct = 0.01 
-            
-            # หากตลาดหลัก (BTC) เป็นหมี แต่มีเหรียญเกิดสัญญาณ Deep Reversal ให้ปรับลด Risk ลงกึ่งหนึ่งทันทีเพื่อเซฟพอร์ต
-            effective_risk_pct = RISK_PER_TRADE_PCT if macro_bullish else (RISK_PER_TRADE_PCT * 0.5)
-            
-            risk_amount_usdt = PORTFOLIO_USDT * (effective_risk_pct / 100)
+            risk_amount_usdt = PORTFOLIO_USDT * (RISK_PER_TRADE_PCT / 100)
             position_size_usdt = risk_amount_usdt / sl_distance_pct
             position_size_usdt = min(position_size_usdt, PORTFOLIO_USDT) 
 
@@ -953,7 +905,8 @@ def scan_market():
                 "vol_confirmed": vol_confirmed,
                 "trend_info": trend_info, "bounce_info": bounce_info, "ob_info": ob_info, "fvg_info": fvg_info,
                 "weekly_ctx": weekly_ctx, "monthly_ctx": monthly_ctx, "cycle_ctx": cycle_ctx, "onchain_ctx": onchain_ctx,
-                "death_cross_ctx": death_cross_ctx, "futures_ctx": futures_ctx, "sweep_info": sweep_info,        
+                "death_cross_ctx": death_cross_ctx, 
+                "futures_ctx": futures_ctx,         
                 "corr_btc": corr_btc, "squeeze_warning": squeeze_warning, "adx": round(adx, 2),
                 "pos_size": f"${position_size_usdt:.2f}", "sl_risk_pct": f"{sl_distance_pct*100:.1f}%"
             })
@@ -974,15 +927,12 @@ def scan_market():
         bullish_ratio = (bullish_coins / total_valid_coins) * 100
         summary_msg = f"📊 <b>[Market & Portfolio Summary]</b>\n"
         summary_msg += f"ทิศทางดัชนีหลัก (BTC): <b>{market_regime}</b>\n"
-        summary_msg += f"ทุนระบบตั้งต้น: {PORTFOLIO_USDT} USDT (ระบบคุม Risk อัตโนมัติ)\n"
+        summary_msg += f"ทุนระบบตั้งต้น: {PORTFOLIO_USDT} USDT (Risk {RISK_PER_TRADE_PCT}%/ไม้)\n"
         summary_msg += f"📈 ขาขึ้น: {bullish_coins} เหรียญ | 📉 ขาลง: {bearish_coins} เหรียญ\n"
 
-        if bullish_ratio >= 65 and macro_bullish: 
-            summary_msg += "🔥 ภาพรวม: <b>🟢 ขาขึ้นชัดเจน (Strong Bullish)</b>\n<i>กลยุทธ์: ซื้อจุดย่อแนวรับ SMC และถือรันเทรนด์เต็มที่</i>"
-        elif bullish_ratio >= 40 or macro_bullish: 
-            summary_msg += "🔥 ภาพรวม: <b>🟡 ไซด์เวย์ปรับฐาน (Sideways)</b>\n<i>กลยุทธ์: เน้นเก็บของสะสมเมื่อราคาทะลุแนวรับกวาดสภาพคล่องสั้นๆ</i>"
-        else: 
-            summary_msg += "🔥 ภาพรวม: <b>🔴 ขาลงเสี่ยงสูงมาก (Macro Bearish)</b>\n<i>กลยุทธ์: บอทจำกัดขนาดไม้ลง 50% และเลือกเฉพาะตัวที่หลุดขอบล่างโซนสัปดาห์เท่านั้น</i>"
+        if bullish_ratio >= 65: summary_msg += "🔥 ภาพรวม: <b>🟢 ขาขึ้นชัดเจน (Strong Bullish)</b>\n<i>กลยุทธ์: ดักย่อซื้อเฉพาะจุดร่วมแนวรับระดับสถาบัน (Confluence Zone)</i>"
+        elif bullish_ratio >= 40: summary_msg += "🔥 ภาพรวม: <b>🟡 ไซด์เวย์ / เลือกทาง (Sideways)</b>\n<i>กลยุทธ์: ตลาดก้ำกึ่ง ควรรอราคาลงสู้กรอบล่าง Fibonacci 61.8%</i>"
+        else: summary_msg += "🔥 ภาพรวม: <b>🔴 ขาลง / พักฐานแรง (Bearish)</b>\n<i>กลยุทธ์: ตลาดเสี่ยงสูงมาก หลีกเลี่ยงสัญญาณทั่วไป ยกเว้นแนวรับทองคำ 1W</i>"
 
         summary_msg += "\n\n📋 <b>สรุปแนวโน้มรายเหรียญ:</b>\n" + "\n".join(coin_trends_summary)
     else:
@@ -997,26 +947,26 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
     message_blocks = [market_summary]
 
     if buy_list:
-        buy_header = "🎯 <b>[Crypto Screener 4H - สัญญาณซื้อจุดแนวรับสถาบัน]</b>"
+        buy_header = "🎯 <b>[Crypto Screener 4H - สัญญาณช้อนซื้อจุดแนวรับสำคัญ]</b>"
         current_block = buy_header
 
         for opt in buy_list:
             vol_note = "\n🔊 Volume: <b>ยืนยันสัญญาณ (สูงกว่า MA20)</b>" if opt["vol_confirmed"] else "\n🔇 Volume: ไม่ยืนยัน"
-            corr_alert = f"\n⚠️ <b>Correlation:</b> {opt['corr_btc']} (วิ่งตาม BTC สูงมาก พอร์ตกระจายตัวต่ำ)" if opt.get('corr_btc', 0) > 0.85 and opt['coin'] != 'BTC' else ""
+            
+            corr_alert = f"\n⚠️ <b>Correlation:</b> {opt['corr_btc']} (วิ่งตาม BTC สูงมาก ควรระวังการกระจายความเสี่ยง)" if opt.get('corr_btc', 0) > 0.85 and opt['coin'] != 'BTC' else ""
             time_alert = f"\n⏳ <b>Time Decay Alert:</b> ADX ต่ำ ({opt.get('adx', 0)}) ตลาดไซด์เวย์ อาจต้องถือรอนาน" if opt.get('squeeze_warning') else ""
 
-            ti, bi, ob, fvg, sw = opt["trend_info"], opt["bounce_info"], opt["ob_info"], opt["fvg_info"], opt["sweep_info"]
+            ti, bi, ob, fvg = opt["trend_info"], opt["bounce_info"], opt["ob_info"], opt["fvg_info"]
             w_ctx, m_ctx, c_ctx = opt.get("weekly_ctx", {}), opt.get("monthly_ctx", {}), opt.get("cycle_ctx", {})
             onchain_ctx = opt.get("onchain_ctx", {})
             dc_ctx = opt.get("death_cross_ctx", {}) 
             ft_ctx = opt.get("futures_ctx", {})     
 
             confluence_report = "\n🛡️ <b>การทดสอบแนวรับสถาบัน:</b>"
-            if sw.get("is_sweep"): confluence_report += f"\n   🔥 {sw['sweep_label']}"
             if w_ctx and w_ctx.get("fibo_618"):
                 confluence_report += f"\n   🔹 Fibo 1W (61.8%): <code>${format_price(w_ctx['fibo_618'])}</code>"
                 confluence_report += f"\n   🔸 Fibo 1W (78.6%): <code>${format_price(w_ctx['fibo_786'])}</code>"
-                confluence_report += f"\n   🔻 <b>Deep Support (กรณีทุบหลุด):</b>"
+                confluence_report += f"\n   🔻 <b>Deep Support (กรณีหลุด):</b>"
                 confluence_report += f"\n      - Fibo 88.6%: <code>${format_price(w_ctx.get('fibo_886'))}</code>"
                 confluence_report += f"\n      - Liquidity Pool: <code>${format_price(w_ctx.get('liquidity_pool'))}</code>"
                 confluence_report += f"\n      - Psycho Support: <code>${format_price(w_ctx.get('psycho_support'))}</code>"
@@ -1051,10 +1001,10 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
                 f"{futures_block}"     
                 f"{monthly_block}"
                 f"{cycle_block}"
-                f"\n\n🛡️ <b>[Risk Management - คุมหน้าตักสถาบัน]</b>"
+                f"\n\n🛡️ <b>[Risk Management]</b>"
                 f"\n💼 <b>แนะนำขนาดไม้ซื้อ (Position Size): <code>{opt['pos_size']}</code></b>"
-                f"\n📉 ระยะความเสี่ยงไปถึงจุดคัท: {opt['sl_risk_pct']}"
-                f"\n❌ ตัดขาดทุนป้องกันภัยโครงสร้าง (Hard SL): <code>{opt['sl']}</code>"
+                f"\n📉 ระยะความเสี่ยง: {opt['sl_risk_pct']}"
+                f"\n❌ ตัดขาดทุนป้องกันภัย (Hard SL): <code>{opt['sl']}</code>"
                 f"\n\n🚀 <b>[Take Profit Strategy]</b>"
                 f"\nเป้าหมาย Fix (TP1): <code>{opt['tp1']}</code>"
                 f"\nเป้าหมาย Fix (TP2): <code>{opt['tp2']}</code>"
@@ -1112,7 +1062,7 @@ def build_messages(buy_list: list, sell_list: list, market_summary: str) -> list
 # Main Execution Block
 # ==========================================
 if __name__ == "__main__":
-    logger.info("เริ่มต้นใช้งาน Crypto Screener (SMC + Bulk Request & Ultra Risk Protection Ready)...")
+    logger.info("เริ่มต้นใช้งาน Crypto Screener (SMC + Bulk Request & Session Optimization Ready)...")
 
     buy_list, sell_list, market_summary = scan_market()
     logger.info(f"สแกนระบบเสร็จสมบูรณ์ → พบสัญญาณซื้อคุณภาพ: {len(buy_list)} ตัว | พบสัญญาณขาย: {len(sell_list)} ตัว")
