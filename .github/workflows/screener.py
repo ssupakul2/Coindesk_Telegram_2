@@ -1,8 +1,12 @@
 name: Crypto Screener (4H)
 
 on:
-  schedule:
-    - cron: "5 */4 * * *"   # ทุก 4 ชั่วโมง (ตาม timeframe ของสัญญาณ)
+  repository_dispatch:
+    types: [trigger-screener]
+#  workflow_dispatch:
+#on:
+ # schedule:
+  #  - cron: "5 */4 * * *"   # ทุก 4 ชั่วโมง (ตาม timeframe ของสัญญาณ)
   workflow_dispatch: {}
 
 # จำเป็นสำหรับให้ workflow commit ไฟล์ positions.json กลับเข้า repo ได้
