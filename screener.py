@@ -286,7 +286,7 @@ MINIMUM_SIGNAL_SCORE = 50
 
 # Exit-side score threshold: minimum exit-warning score to surface a coin
 # in the "พิจารณาปิดสถานะ" (exit watch) section.
-MINIMUM_EXIT_SCORE = 40
+MINIMUM_EXIT_SCORE = 25  # เปลี่ยนจาก 40 เป็น 25
 
 # รายชื่อเหรียญที่รองรับการดึง On-chain (Blockchain Histo) จาก CryptoCompare
 ONCHAIN_SUPPORTED_COINS = {"BTC", "ETH", "ADA", "DOGE", "LTC", "BCH", "LINK"}
@@ -2102,7 +2102,7 @@ def calculate_exit_score(rsi, bearish_candle_info, vol_confirmed, mtf_info, adx,
 
     # RSI Overbought
     if rsi >= RSI_OVERBOUGHT:
-        score += 25
+        score += 40  # เปลี่ยนจาก 25 เป็น 40 เพื่อให้ถึงเกณฑ์ MINIMUM_EXIT_SCORE ทันที
         reasons.append(f"RSI Overbought ({rsi:.1f})")
     elif rsi >= 60:
         score += 10
