@@ -12,7 +12,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 590.99,
+    "high_water_mark": 592.1,
     "status": "open"
   },
   "SOL": {
@@ -61,6 +61,22 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 0.1045,
+    "status": "open"
+  },
+  "FLOKI": {
+    "entry_price": 2.539e-05,
+    "entry_time": "2026-06-22T03:24:45.307994+00:00",
+    "sl": 2.2466400000000002e-05,
+    "original_sl": 2.2466400000000002e-05,
+    "tp1": 2.6211426785714286e-05,
+    "tp2": 2.703285357142857e-05,
+    "tier": "small",
+    "atr_at_entry": 4.5071428571428565e-07,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 2.539e-05,
     "status": "open"
   }
 }
