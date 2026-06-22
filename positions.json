@@ -2,23 +2,23 @@
   "BNB": {
     "entry_price": 587.43,
     "entry_time": "2026-06-20T09:47:37.469799+00:00",
-    "sl": 587.43,
+    "sl": 593.7264285714285,
     "original_sl": 551.114,
     "tp1": 598.3528499999999,
     "tp2": 609.2756999999999,
     "tier": "mid",
     "atr_at_entry": 6.7114285714285495,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 593.14,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 598.89,
     "status": "open"
   },
   "SOL": {
     "entry_price": 71.55,
     "entry_time": "2026-06-20T09:47:37.498635+00:00",
-    "sl": 72.65428571428572,
+    "sl": 72.77499999999999,
     "original_sl": 64.372,
     "tp1": 73.6717232142857,
     "tp2": 75.79344642857143,
@@ -28,7 +28,7 @@
     "tp1_5_hit": false,
     "partial_closed": true,
     "remaining_size_pct": 0.5,
-    "high_water_mark": 74.03,
+    "high_water_mark": 74.16,
     "status": "open"
   },
   "SUI": {
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.7207,
+    "high_water_mark": 0.7367,
     "status": "open"
   },
   "OP": {
@@ -66,7 +66,7 @@
   "FLOKI": {
     "entry_price": 2.539e-05,
     "entry_time": "2026-06-22T03:24:45.307994+00:00",
-    "sl": 2.2466400000000002e-05,
+    "sl": 2.539e-05,
     "original_sl": 2.2466400000000002e-05,
     "tp1": 2.6211426785714286e-05,
     "tp2": 2.703285357142857e-05,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 2.539e-05,
+    "high_water_mark": 2.591e-05,
     "status": "open"
   }
 }
