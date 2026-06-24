@@ -31,22 +31,6 @@
     "high_water_mark": 0.1045,
     "status": "open"
   },
-  "BTC": {
-    "entry_price": 64040.04,
-    "entry_time": "2026-06-23T03:24:44.604602+00:00",
-    "sl": 61688.25,
-    "original_sl": 61688.25,
-    "tp1": 64840.97320714286,
-    "tp2": 65641.90641428571,
-    "tier": "major",
-    "atr_at_entry": 659.2042857142848,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 64040.04,
-    "status": "open"
-  },
   "SHIB": {
     "entry_price": 4.58e-06,
     "entry_time": "2026-06-23T12:26:53.115623+00:00",
@@ -77,6 +61,22 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 6.524,
+    "status": "open"
+  },
+  "DOGE": {
+    "entry_price": 0.07687,
+    "entry_time": "2026-06-24T15:26:52.905335+00:00",
+    "sl": 0.0707204,
+    "original_sl": 0.0707204,
+    "tp1": 0.08041175714285714,
+    "tp2": 0.08395351428571429,
+    "tier": "small",
+    "atr_at_entry": 0.001448571428571432,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.07687,
     "status": "open"
   }
 }
