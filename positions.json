@@ -34,7 +34,7 @@
   "BNB": {
     "entry_price": 552.2,
     "entry_time": "2026-06-25T15:26:50.686532+00:00",
-    "sl": 519.27,
+    "sl": 552.2,
     "original_sl": 519.27,
     "tp1": 577.6803928571429,
     "tp2": 603.1607857142857,
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 562.54,
+    "high_water_mark": 567.52,
     "status": "open"
   },
   "SOL": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 69.29,
+    "high_water_mark": 69.82,
     "status": "open"
   },
   "BTC": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 60062.9,
+    "high_water_mark": 60144.01,
     "status": "open"
   }
 }
