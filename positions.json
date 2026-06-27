@@ -50,7 +50,7 @@
   "SOL": {
     "entry_price": 65.97,
     "entry_time": "2026-06-25T15:26:50.729879+00:00",
-    "sl": 70.16142857142857,
+    "sl": 70.62714285714286,
     "original_sl": 61.47449999999999,
     "tp1": 70.77857142857142,
     "tp2": 75.58714285714285,
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": true,
     "remaining_size_pct": 0.5,
-    "high_water_mark": 72.74,
+    "high_water_mark": 72.89,
     "status": "open"
   },
   "BTC": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 60341.29,
+    "high_water_mark": 60748.79,
     "status": "open"
   }
 }
