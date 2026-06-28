@@ -47,22 +47,6 @@
     "high_water_mark": 567.68,
     "status": "open"
   },
-  "SOL": {
-    "entry_price": 65.97,
-    "entry_time": "2026-06-25T15:26:50.729879+00:00",
-    "sl": 70.62714285714286,
-    "original_sl": 61.47449999999999,
-    "tp1": 70.77857142857142,
-    "tp2": 75.58714285714285,
-    "tier": "mid",
-    "atr_at_entry": 1.942857142857143,
-    "tp1_hit": true,
-    "tp1_5_hit": false,
-    "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 72.89,
-    "status": "open"
-  },
   "BTC": {
     "entry_price": 60062.9,
     "entry_time": "2026-06-26T06:24:44.268470+00:00",
@@ -77,6 +61,22 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 60748.79,
+    "status": "open"
+  },
+  "OP": {
+    "entry_price": 0.1008,
+    "entry_time": "2026-06-28T06:24:45.630308+00:00",
+    "sl": 0.092815,
+    "original_sl": 0.092815,
+    "tp1": 0.10639033928571429,
+    "tp2": 0.11198067857142857,
+    "tier": "mid",
+    "atr_at_entry": 0.0030928571428571424,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.1008,
     "status": "open"
   }
 }
