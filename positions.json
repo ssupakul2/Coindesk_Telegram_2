@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1565.84,
+    "high_water_mark": 1576.54,
     "status": "open"
   },
   "XRP": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.033,
+    "high_water_mark": 1.0441,
     "status": "open"
   }
 }
