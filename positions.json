@@ -50,7 +50,7 @@
   "ETH": {
     "entry_price": 1565.84,
     "entry_time": "2026-06-30T15:27:47.162907+00:00",
-    "sl": 1597.4671428571428,
+    "sl": 1597.9771428571428,
     "original_sl": 1502.4847499999998,
     "tp1": 1611.3170642857142,
     "tp2": 1656.7941285714285,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.0639,
+    "high_water_mark": 1.0661,
     "status": "open"
   }
 }
