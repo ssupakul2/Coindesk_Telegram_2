@@ -12,13 +12,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.7403,
+    "high_water_mark": 0.7413,
     "status": "open"
   },
   "BTC": {
     "entry_price": 60062.9,
     "entry_time": "2026-06-26T06:24:44.268470+00:00",
-    "sl": 57625.13249999999,
+    "sl": 60062.9,
     "original_sl": 57625.13249999999,
     "tp1": 62696.477589285714,
     "tp2": 65330.05517857143,
@@ -28,7 +28,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 61198.01,
+    "high_water_mark": 61686.91,
     "status": "open"
   },
   "OP": {
@@ -47,22 +47,6 @@
     "high_water_mark": 0.1028,
     "status": "open"
   },
-  "ETH": {
-    "entry_price": 1565.84,
-    "entry_time": "2026-06-30T15:27:47.162907+00:00",
-    "sl": 1621.9914285714285,
-    "original_sl": 1502.4847499999998,
-    "tp1": 1611.3170642857142,
-    "tp2": 1656.7941285714285,
-    "tier": "major",
-    "atr_at_entry": 27.437142857142867,
-    "tp1_hit": true,
-    "tp1_5_hit": true,
-    "partial_closed": true,
-    "remaining_size_pct": 0.25,
-    "high_water_mark": 1652.77,
-    "status": "open"
-  },
   "XRP": {
     "entry_price": 1.033,
     "entry_time": "2026-06-30T15:27:47.294665+00:00",
@@ -73,10 +57,26 @@
     "tier": "mid",
     "atr_at_entry": 0.018035714285714266,
     "tp1_hit": true,
-    "tp1_5_hit": false,
+    "tp1_5_hit": true,
     "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 1.0898,
+    "remaining_size_pct": 0.25,
+    "high_water_mark": 1.0912,
+    "status": "open"
+  },
+  "BNB": {
+    "entry_price": 561.99,
+    "entry_time": "2026-07-02T15:27:50.021163+00:00",
+    "sl": 521.303,
+    "original_sl": 521.303,
+    "tp1": 584.7389625,
+    "tp2": 607.487925,
+    "tier": "mid",
+    "atr_at_entry": 8.894999999999998,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 561.99,
     "status": "open"
   }
 }
