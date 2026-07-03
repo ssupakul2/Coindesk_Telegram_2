@@ -12,7 +12,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.7507,
+    "high_water_mark": 0.7533,
     "status": "open"
   },
   "BTC": {
@@ -28,7 +28,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 61966.36,
+    "high_water_mark": 62025.96,
     "status": "open"
   },
   "OP": {
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1047,
+    "high_water_mark": 0.1052,
     "status": "open"
   },
   "BNB": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 565.57,
+    "high_water_mark": 565.66,
     "status": "open"
   },
   "ADA": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1689,
+    "high_water_mark": 0.1713,
     "status": "open"
   }
 }
