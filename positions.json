@@ -2,17 +2,17 @@
   "SUI": {
     "entry_price": 0.7207,
     "entry_time": "2026-06-20T09:47:37.701298+00:00",
-    "sl": 0.6630440000000001,
+    "sl": 0.7260285714285715,
     "original_sl": 0.6630440000000001,
     "tp1": 0.753895,
     "tp2": 0.7870900000000001,
     "tier": "small",
     "atr_at_entry": 0.01580714285714286,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 0.7533,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 0.7569,
     "status": "open"
   },
   "BTC": {
@@ -28,7 +28,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 62025.96,
+    "high_water_mark": 62146.51,
     "status": "open"
   },
   "OP": {
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1052,
+    "high_water_mark": 0.106,
     "status": "open"
   },
   "BNB": {
@@ -60,13 +60,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 565.66,
+    "high_water_mark": 568.02,
     "status": "open"
   },
   "ADA": {
     "entry_price": 0.1655,
     "entry_time": "2026-07-03T06:24:49.840601+00:00",
-    "sl": 0.14649,
+    "sl": 0.1655,
     "original_sl": 0.14649,
     "tp1": 0.1785485535714286,
     "tp2": 0.19159710714285716,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1713,
+    "high_water_mark": 0.1779,
     "status": "open"
   }
 }
