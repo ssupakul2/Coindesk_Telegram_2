@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 562.41,
+    "high_water_mark": 563.61,
     "status": "open"
   },
   "ADA": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1655,
+    "high_water_mark": 0.1666,
     "status": "open"
   }
 }
