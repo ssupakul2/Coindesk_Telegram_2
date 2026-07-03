@@ -12,7 +12,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.7415,
+    "high_water_mark": 0.7507,
     "status": "open"
   },
   "BTC": {
@@ -28,13 +28,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 61799.95,
+    "high_water_mark": 61966.36,
     "status": "open"
   },
   "OP": {
     "entry_price": 0.1008,
     "entry_time": "2026-06-28T06:24:45.630308+00:00",
-    "sl": 0.092815,
+    "sl": 0.1008,
     "original_sl": 0.092815,
     "tp1": 0.10639033928571429,
     "tp2": 0.11198067857142857,
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1028,
+    "high_water_mark": 0.1047,
     "status": "open"
   },
   "BNB": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 563.61,
+    "high_water_mark": 565.57,
     "status": "open"
   },
   "ADA": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1666,
+    "high_water_mark": 0.1689,
     "status": "open"
   }
 }
