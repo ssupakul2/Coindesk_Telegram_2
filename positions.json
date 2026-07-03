@@ -12,7 +12,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.7413,
+    "high_water_mark": 0.7415,
     "status": "open"
   },
   "BTC": {
@@ -50,7 +50,7 @@
   "XRP": {
     "entry_price": 1.033,
     "entry_time": "2026-06-30T15:27:47.294665+00:00",
-    "sl": 1.0717857142857143,
+    "sl": 1.0734785714285715,
     "original_sl": 0.968905,
     "tp1": 1.0683049107142857,
     "tp2": 1.1036098214285712,
@@ -60,7 +60,7 @@
     "tp1_5_hit": true,
     "partial_closed": true,
     "remaining_size_pct": 0.25,
-    "high_water_mark": 1.0912,
+    "high_water_mark": 1.0921,
     "status": "open"
   },
   "BNB": {
