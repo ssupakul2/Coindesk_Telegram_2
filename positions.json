@@ -34,7 +34,7 @@
   "OP": {
     "entry_price": 0.1008,
     "entry_time": "2026-06-28T06:24:45.630308+00:00",
-    "sl": 0.10241428571428571,
+    "sl": 0.10360000000000001,
     "original_sl": 0.092815,
     "tp1": 0.10639033928571429,
     "tp2": 0.11198067857142857,
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": true,
     "remaining_size_pct": 0.5,
-    "high_water_mark": 0.107,
+    "high_water_mark": 0.1082,
     "status": "open"
   },
   "BNB": {
