@@ -28,3 +28,4 @@
 {"coin": "ADA", "event": "partial_tp1", "entry_price": 0.1655, "exit_price": 0.1802, "pnl_pct": 8.882, "size_closed_pct": 50.0, "entry_time": "2026-07-03T06:24:49.840601+00:00", "exit_time": "2026-07-03T21:27:46.664276+00:00", "tier": "mid"}
 {"coin": "OP", "event": "partial_tp1", "entry_price": 0.1008, "exit_price": 0.107, "pnl_pct": 6.151, "size_closed_pct": 50.0, "entry_time": "2026-06-28T06:24:45.630308+00:00", "exit_time": "2026-07-03T21:27:46.813263+00:00", "tier": "mid"}
 {"coin": "SUI", "event": "partial_tp1_5", "entry_price": 0.7207, "exit_price": 0.7722, "pnl_pct": 7.146, "size_closed_pct": 25.0, "entry_time": "2026-06-20T09:47:37.701298+00:00", "exit_time": "2026-07-03T21:27:47.008314+00:00", "tier": "small"}
+{"coin": "BTC", "event": "partial_tp1", "entry_price": 60062.9, "exit_price": 62778.61, "pnl_pct": 4.521, "size_closed_pct": 50.0, "entry_time": "2026-06-26T06:24:44.268470+00:00", "exit_time": "2026-07-04T00:24:43.100185+00:00", "tier": "major"}

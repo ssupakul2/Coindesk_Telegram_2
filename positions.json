@@ -18,23 +18,23 @@
   "BTC": {
     "entry_price": 60062.9,
     "entry_time": "2026-06-26T06:24:44.268470+00:00",
-    "sl": 60062.9,
+    "sl": 61968.23428571429,
     "original_sl": 57625.13249999999,
     "tp1": 62696.477589285714,
     "tp2": 65330.05517857143,
     "tier": "major",
     "atr_at_entry": 1300.5321428571426,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 62664.01,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 62778.61,
     "status": "open"
   },
   "OP": {
     "entry_price": 0.1008,
     "entry_time": "2026-06-28T06:24:45.630308+00:00",
-    "sl": 0.10225714285714287,
+    "sl": 0.10241428571428571,
     "original_sl": 0.092815,
     "tp1": 0.10639033928571429,
     "tp2": 0.11198067857142857,
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 573.4,
+    "high_water_mark": 573.68,
     "status": "open"
   },
   "ADA": {
