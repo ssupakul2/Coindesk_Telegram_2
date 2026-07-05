@@ -2,7 +2,7 @@
   "BTC": {
     "entry_price": 60062.9,
     "entry_time": "2026-06-26T06:24:44.268470+00:00",
-    "sl": 62370.794285714284,
+    "sl": 62417.84142857143,
     "original_sl": 57625.13249999999,
     "tp1": 62696.477589285714,
     "tp2": 65330.05517857143,
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": true,
     "remaining_size_pct": 0.5,
-    "high_water_mark": 586.98,
+    "high_water_mark": 588.24,
     "status": "open"
   },
   "FLOKI": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.7557,
+    "high_water_mark": 0.7627,
     "status": "open"
   }
 }
