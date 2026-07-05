@@ -1,20 +1,4 @@
 {
-  "SUI": {
-    "entry_price": 0.7207,
-    "entry_time": "2026-06-20T09:47:37.701298+00:00",
-    "sl": 0.7623571428571428,
-    "original_sl": 0.6630440000000001,
-    "tp1": 0.753895,
-    "tp2": 0.7870900000000001,
-    "tier": "small",
-    "atr_at_entry": 0.01580714285714286,
-    "tp1_hit": true,
-    "tp1_5_hit": true,
-    "partial_closed": true,
-    "remaining_size_pct": 0.25,
-    "high_water_mark": 0.7767,
-    "status": "open"
-  },
   "BTC": {
     "entry_price": 60062.9,
     "entry_time": "2026-06-26T06:24:44.268470+00:00",
@@ -77,6 +61,22 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 2.423e-05,
+    "status": "open"
+  },
+  "SUI": {
+    "entry_price": 0.7555,
+    "entry_time": "2026-07-05T00:24:46.395713+00:00",
+    "sl": 0.6910120000000001,
+    "original_sl": 0.6910120000000001,
+    "tp1": 0.7868897499999999,
+    "tp2": 0.8182794999999998,
+    "tier": "small",
+    "atr_at_entry": 0.014235714285714265,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.7555,
     "status": "open"
   }
 }
