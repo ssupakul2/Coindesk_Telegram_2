@@ -34,17 +34,17 @@
   "BNB": {
     "entry_price": 561.99,
     "entry_time": "2026-07-02T15:27:50.021163+00:00",
-    "sl": 561.99,
+    "sl": 580.5307142857143,
     "original_sl": 521.303,
     "tp1": 584.7389625,
     "tp2": 607.487925,
     "tier": "mid",
     "atr_at_entry": 8.894999999999998,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 580.75,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 586.98,
     "status": "open"
   },
   "FLOKI": {
