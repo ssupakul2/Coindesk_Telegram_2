@@ -2,7 +2,7 @@
   "BTC": {
     "entry_price": 60062.9,
     "entry_time": "2026-06-26T06:24:44.268470+00:00",
-    "sl": 62417.84142857143,
+    "sl": 62956.83785714286,
     "original_sl": 57625.13249999999,
     "tp1": 62696.477589285714,
     "tp2": 65330.05517857143,
@@ -12,7 +12,7 @@
     "tp1_5_hit": false,
     "partial_closed": true,
     "remaining_size_pct": 0.5,
-    "high_water_mark": 63436.0,
+    "high_water_mark": 63508.01,
     "status": "open"
   },
   "OP": {
