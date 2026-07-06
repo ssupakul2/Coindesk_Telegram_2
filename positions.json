@@ -1,36 +1,4 @@
 {
-  "BTC": {
-    "entry_price": 60062.9,
-    "entry_time": "2026-06-26T06:24:44.268470+00:00",
-    "sl": 62956.83785714286,
-    "original_sl": 57625.13249999999,
-    "tp1": 62696.477589285714,
-    "tp2": 65330.05517857143,
-    "tier": "major",
-    "atr_at_entry": 1300.5321428571426,
-    "tp1_hit": true,
-    "tp1_5_hit": false,
-    "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 63508.01,
-    "status": "open"
-  },
-  "BNB": {
-    "entry_price": 561.99,
-    "entry_time": "2026-07-02T15:27:50.021163+00:00",
-    "sl": 580.5307142857143,
-    "original_sl": 521.303,
-    "tp1": 584.7389625,
-    "tp2": 607.487925,
-    "tier": "mid",
-    "atr_at_entry": 8.894999999999998,
-    "tp1_hit": true,
-    "tp1_5_hit": false,
-    "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 588.24,
-    "status": "open"
-  },
   "FLOKI": {
     "entry_price": 2.423e-05,
     "entry_time": "2026-07-04T18:27:47.955850+00:00",
