@@ -66,7 +66,7 @@
   "BNB": {
     "entry_price": 571.58,
     "entry_time": "2026-07-08T03:24:43.429930+00:00",
-    "sl": 521.303,
+    "sl": 571.58,
     "original_sl": 521.303,
     "tp1": 586.1167357142857,
     "tp2": 600.6534714285715,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 578.44,
+    "high_water_mark": 579.12,
     "status": "open"
   }
 }
