@@ -47,22 +47,6 @@
     "high_water_mark": 4.47e-06,
     "status": "open"
   },
-  "OP": {
-    "entry_price": 0.1009,
-    "entry_time": "2026-07-12T06:24:46.383600+00:00",
-    "sl": 0.1009,
-    "original_sl": 0.09224500000000001,
-    "tp1": 0.105072,
-    "tp2": 0.11014267857142856,
-    "tier": "mid",
-    "atr_at_entry": 0.002535714285714285,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1039,
-    "status": "open"
-  },
   "TRX": {
     "entry_price": 0.331,
     "entry_time": "2026-07-13T03:24:42.896969+00:00",
