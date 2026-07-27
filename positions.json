@@ -63,20 +63,20 @@
     "high_water_mark": 0.0987,
     "status": "open"
   },
-  "ETH": {
-    "entry_price": 1946.23,
-    "entry_time": "2026-07-27T03:24:43.993625+00:00",
-    "sl": 1946.23,
-    "original_sl": 1861.03125,
-    "tp1": 1967.9013892857142,
-    "tp2": 1989.5727785714284,
-    "tier": "major",
-    "atr_at_entry": 16.60642857142854,
+  "SOL": {
+    "entry_price": 75.34,
+    "entry_time": "2026-07-27T15:27:53.165154+00:00",
+    "sl": 71.4875,
+    "original_sl": 71.4875,
+    "tp1": 76.646125,
+    "tp2": 77.95224999999999,
+    "tier": "mid",
+    "atr_at_entry": 0.8099999999999982,
     "tp1_hit": false,
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1966.13,
+    "high_water_mark": 75.34,
     "status": "open"
   }
 }
