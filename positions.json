@@ -50,7 +50,7 @@
   "ADA": {
     "entry_price": 0.1565,
     "entry_time": "2026-07-28T06:24:45.306105+00:00",
-    "sl": 0.148675,
+    "sl": 0.1565,
     "original_sl": 0.148675,
     "tp1": 0.16074478571428572,
     "tp2": 0.16498957142857143,
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1576,
+    "high_water_mark": 0.1587,
     "status": "open"
   },
   "NEAR": {
