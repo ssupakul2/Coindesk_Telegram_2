@@ -34,7 +34,7 @@
   "SOL": {
     "entry_price": 75.34,
     "entry_time": "2026-07-27T15:27:53.165154+00:00",
-    "sl": 75.61285714285715,
+    "sl": 75.75142857142858,
     "original_sl": 71.4875,
     "tp1": 76.646125,
     "tp2": 77.95224999999999,
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": true,
     "remaining_size_pct": 0.5,
-    "high_water_mark": 77.2,
+    "high_water_mark": 77.26,
     "status": "open"
   },
   "OP": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.0894,
+    "high_water_mark": 0.0899,
     "status": "open"
   },
   "SHIB": {
