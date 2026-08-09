@@ -34,17 +34,17 @@
   "SOL": {
     "entry_price": 75.34,
     "entry_time": "2026-07-27T15:27:53.165154+00:00",
-    "sl": 71.4875,
+    "sl": 75.28571428571429,
     "original_sl": 71.4875,
     "tp1": 76.646125,
     "tp2": 77.95224999999999,
     "tier": "mid",
     "atr_at_entry": 0.8099999999999982,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 76.51,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 76.87,
     "status": "open"
   },
   "OP": {
