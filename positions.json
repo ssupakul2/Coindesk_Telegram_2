@@ -62,5 +62,21 @@
     "remaining_size_pct": 1.0,
     "high_water_mark": 0.188,
     "status": "open"
+  },
+  "BTC": {
+    "entry_price": 62866.0,
+    "entry_time": "2026-08-14T12:26:49.575220+00:00",
+    "sl": 61291.5225,
+    "original_sl": 61291.5225,
+    "tp1": 63449.16995,
+    "tp2": 64355.687392857144,
+    "tier": "major",
+    "atr_at_entry": 461.91857142857145,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 62866.0,
+    "status": "open"
   }
 }
