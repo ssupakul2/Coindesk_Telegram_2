@@ -62,21 +62,5 @@
     "remaining_size_pct": 1.0,
     "high_water_mark": 0.188,
     "status": "open"
-  },
-  "AVAX": {
-    "entry_price": 6.223,
-    "entry_time": "2026-08-11T18:26:56.020842+00:00",
-    "sl": 6.402428571428572,
-    "original_sl": 5.90045,
-    "tp1": 6.433756428571428,
-    "tp2": 6.644512857142857,
-    "tier": "mid",
-    "atr_at_entry": 0.1190714285714285,
-    "tp1_hit": true,
-    "tp1_5_hit": false,
-    "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 6.528,
-    "status": "open"
   }
 }
