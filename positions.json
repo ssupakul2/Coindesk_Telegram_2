@@ -31,22 +31,6 @@
     "high_water_mark": 0.188,
     "status": "open"
   },
-  "BNB": {
-    "entry_price": 601.73,
-    "entry_time": "2026-08-17T00:24:44.897321+00:00",
-    "sl": 603.0864285714285,
-    "original_sl": 566.7795,
-    "tp1": 605.9691071428572,
-    "tp2": 610.2082142857143,
-    "tier": "mid",
-    "atr_at_entry": 2.757142857142867,
-    "tp1_hit": true,
-    "tp1_5_hit": false,
-    "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 606.23,
-    "status": "open"
-  },
   "AVAX": {
     "entry_price": 6.27,
     "entry_time": "2026-08-18T03:24:45.303000+00:00",
@@ -77,6 +61,22 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 0.9987,
+    "status": "open"
+  },
+  "BNB": {
+    "entry_price": 602.17,
+    "entry_time": "2026-08-18T09:24:42.526088+00:00",
+    "sl": 571.786,
+    "original_sl": 571.786,
+    "tp1": 607.0217714285714,
+    "tp2": 611.8735428571429,
+    "tier": "mid",
+    "atr_at_entry": 3.0514285714285734,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 602.17,
     "status": "open"
   }
 }
