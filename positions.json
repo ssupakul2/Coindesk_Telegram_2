@@ -50,7 +50,7 @@
   "XRP": {
     "entry_price": 0.9987,
     "entry_time": "2026-08-18T06:24:45.216166+00:00",
-    "sl": 0.93936,
+    "sl": 0.9987,
     "original_sl": 0.93936,
     "tp1": 1.0129232142857143,
     "tp2": 1.0271464285714285,
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.0023,
+    "high_water_mark": 1.0066,
     "status": "open"
   },
   "BNB": {
