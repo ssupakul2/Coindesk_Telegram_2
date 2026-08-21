@@ -1,18 +1,1 @@
-{
-  "SHIB": {
-    "entry_price": 4.81e-06,
-    "entry_time": "2026-08-06T03:24:45.664670+00:00",
-    "sl": 4.842857142857143e-06,
-    "original_sl": 4.314800000000001e-06,
-    "tp1": 4.9744910714285714e-06,
-    "tp2": 5.138982142857143e-06,
-    "tier": "small",
-    "atr_at_entry": 8.214285714285738e-08,
-    "tp1_hit": true,
-    "tp1_5_hit": true,
-    "partial_closed": true,
-    "remaining_size_pct": 0.25,
-    "high_water_mark": 5.13e-06,
-    "status": "open"
-  }
-}
+{}
