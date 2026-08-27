@@ -41,10 +41,10 @@
     "tier": "mid",
     "atr_at_entry": 3.2757142857142845,
     "tp1_hit": true,
-    "tp1_5_hit": false,
+    "tp1_5_hit": true,
     "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 107.23,
+    "remaining_size_pct": 0.25,
+    "high_water_mark": 108.65,
     "status": "open"
   },
   "ADA": {
