@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.2054,
+    "high_water_mark": 0.2057,
     "status": "open"
   },
   "TRX": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.3257,
+    "high_water_mark": 0.3265,
     "status": "open"
   }
 }
