@@ -12,7 +12,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 2509.8,
+    "high_water_mark": 2510.99,
     "status": "open"
   },
   "SHIB": {
@@ -45,22 +45,6 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 2.598e-05,
-    "status": "open"
-  },
-  "TRX": {
-    "entry_price": 0.3254,
-    "entry_time": "2026-09-01T15:25:50.247165+00:00",
-    "sl": 0.3299714285714286,
-    "original_sl": 0.30913,
-    "tp1": 0.3294365000000001,
-    "tp2": 0.3334730000000001,
-    "tier": "mid",
-    "atr_at_entry": 0.0019714285714285845,
-    "tp1_hit": true,
-    "tp1_5_hit": true,
-    "partial_closed": true,
-    "remaining_size_pct": 0.25,
-    "high_water_mark": 0.3317,
     "status": "open"
   }
 }
