@@ -15,22 +15,6 @@
     "high_water_mark": 2510.99,
     "status": "open"
   },
-  "SHIB": {
-    "entry_price": 5.15e-06,
-    "entry_time": "2026-08-30T00:24:46.349523+00:00",
-    "sl": 5.325e-06,
-    "original_sl": 4.2228000000000005e-06,
-    "tp1": 5.356625e-06,
-    "tp2": 5.56325e-06,
-    "tier": "small",
-    "atr_at_entry": 9.499999999999994e-08,
-    "tp1_hit": true,
-    "tp1_5_hit": false,
-    "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 5.43e-06,
-    "status": "open"
-  },
   "FLOKI": {
     "entry_price": 2.524e-05,
     "entry_time": "2026-08-30T06:24:42.860998+00:00",
