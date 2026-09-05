@@ -30,5 +30,21 @@
     "remaining_size_pct": 1.0,
     "high_water_mark": 1.4007,
     "status": "open"
+  },
+  "OP": {
+    "entry_price": 0.1001,
+    "entry_time": "2026-09-05T03:24:42.933899+00:00",
+    "sl": 0.08179499999999999,
+    "original_sl": 0.08179499999999999,
+    "tp1": 0.1063979107142857,
+    "tp2": 0.11269582142857142,
+    "tier": "mid",
+    "atr_at_entry": 0.003192857142857141,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.1001,
+    "status": "open"
   }
 }
