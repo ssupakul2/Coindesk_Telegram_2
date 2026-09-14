@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 5.34e-06,
+    "high_water_mark": 5.35e-06,
     "status": "open"
   },
   "SOL": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 102.94,
+    "high_water_mark": 103.38,
     "status": "open"
   }
 }
