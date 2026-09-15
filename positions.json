@@ -15,22 +15,6 @@
     "high_water_mark": 756.41,
     "status": "open"
   },
-  "FLOKI": {
-    "entry_price": 2.628e-05,
-    "entry_time": "2026-09-08T00:24:41.800430+00:00",
-    "sl": 2.3800400000000003e-05,
-    "original_sl": 2.3800400000000003e-05,
-    "tp1": 2.7748575e-05,
-    "tp2": 2.9217149999999995e-05,
-    "tier": "small",
-    "atr_at_entry": 6.099999999999995e-07,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 2.667e-05,
-    "status": "open"
-  },
   "SHIB": {
     "entry_price": 5.24e-06,
     "entry_time": "2026-09-10T00:24:43.449278+00:00",
@@ -77,6 +61,22 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 0.1007,
+    "status": "open"
+  },
+  "DOGE": {
+    "entry_price": 0.08019,
+    "entry_time": "2026-09-15T21:26:57.428739+00:00",
+    "sl": 0.0737748,
+    "original_sl": 0.0737748,
+    "tp1": 0.0839259,
+    "tp2": 0.0876618,
+    "tier": "small",
+    "atr_at_entry": 0.0016942857142857146,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.08019,
     "status": "open"
   }
 }
