@@ -28,7 +28,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 5.35e-06,
+    "high_water_mark": 5.4e-06,
     "status": "open"
   },
   "SOL": {
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 105.76,
+    "high_water_mark": 106.29,
     "status": "open"
   },
   "OP": {
@@ -57,16 +57,16 @@
     "tier": "mid",
     "atr_at_entry": 0.0033857142857142875,
     "tp1_hit": true,
-    "tp1_5_hit": false,
+    "tp1_5_hit": true,
     "partial_closed": true,
-    "remaining_size_pct": 0.5,
+    "remaining_size_pct": 0.25,
     "high_water_mark": 0.1125,
     "status": "open"
   },
   "DOGE": {
     "entry_price": 0.08019,
     "entry_time": "2026-09-15T21:26:57.428739+00:00",
-    "sl": 0.08298928571428571,
+    "sl": 0.08391785714285714,
     "original_sl": 0.0737748,
     "tp1": 0.0839259,
     "tp2": 0.0876618,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": true,
     "remaining_size_pct": 0.5,
-    "high_water_mark": 0.08435,
+    "high_water_mark": 0.0853,
     "status": "open"
   }
 }
