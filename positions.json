@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 104.13,
+    "high_water_mark": 105.76,
     "status": "open"
   },
   "OP": {
@@ -66,17 +66,17 @@
   "DOGE": {
     "entry_price": 0.08019,
     "entry_time": "2026-09-15T21:26:57.428739+00:00",
-    "sl": 0.08019,
+    "sl": 0.08298928571428571,
     "original_sl": 0.0737748,
     "tp1": 0.0839259,
     "tp2": 0.0876618,
     "tier": "small",
     "atr_at_entry": 0.0016942857142857146,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 0.08376,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 0.08435,
     "status": "open"
   }
 }
