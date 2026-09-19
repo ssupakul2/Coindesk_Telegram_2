@@ -18,17 +18,17 @@
   "SHIB": {
     "entry_price": 5.24e-06,
     "entry_time": "2026-09-10T00:24:43.449278+00:00",
-    "sl": 4.646e-06,
+    "sl": 5.318571428571428e-06,
     "original_sl": 4.646e-06,
     "tp1": 5.5625e-06,
     "tp2": 5.884999999999999e-06,
     "tier": "small",
     "atr_at_entry": 1.2285714285714272e-07,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 5.49e-06,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 5.59e-06,
     "status": "open"
   },
   "XRP": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 2.609e-05,
+    "high_water_mark": 2.656e-05,
     "status": "open"
   }
 }
