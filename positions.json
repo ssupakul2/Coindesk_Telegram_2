@@ -34,7 +34,7 @@
   "XRP": {
     "entry_price": 1.4016,
     "entry_time": "2026-09-19T00:24:39.617208+00:00",
-    "sl": 1.250485,
+    "sl": 1.4016,
     "original_sl": 1.250485,
     "tp1": 1.4534628749999998,
     "tp2": 1.5053257499999997,
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.4203,
+    "high_water_mark": 1.4286,
     "status": "open"
   },
   "FLOKI": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 2.588e-05,
+    "high_water_mark": 2.609e-05,
     "status": "open"
   }
 }
