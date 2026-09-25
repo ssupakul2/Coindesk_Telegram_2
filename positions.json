@@ -28,7 +28,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1348,
+    "high_water_mark": 0.1372,
     "status": "open"
   },
   "FLOKI": {
@@ -50,23 +50,23 @@
   "XRP": {
     "entry_price": 1.4655,
     "entry_time": "2026-09-24T09:24:48.219765+00:00",
-    "sl": 1.4655,
+    "sl": 1.5613142857142859,
     "original_sl": 1.250485,
     "tp1": 1.5894155357142856,
     "tp2": 1.7133310714285714,
     "tier": "mid",
     "atr_at_entry": 0.047071428571428556,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 1.5524,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 1.6059,
     "status": "open"
   },
   "NEAR": {
     "entry_price": 4.491,
     "entry_time": "2026-09-25T03:24:41.347317+00:00",
-    "sl": 3.8949999999999996,
+    "sl": 4.491,
     "original_sl": 3.8949999999999996,
     "tp1": 5.307312857142857,
     "tp2": 6.123625714285714,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 4.859,
+    "high_water_mark": 4.998,
     "status": "open"
   }
 }
