@@ -18,17 +18,17 @@
   "OP": {
     "entry_price": 0.1237,
     "entry_time": "2026-09-23T18:26:43.470700+00:00",
-    "sl": 0.1237,
+    "sl": 0.12857142857142856,
     "original_sl": 0.115995,
     "tp1": 0.14098048214285716,
     "tp2": 0.15826096428571432,
     "tier": "mid",
     "atr_at_entry": 0.006564285714285718,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 0.138,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 0.141,
     "status": "open"
   },
   "FLOKI": {
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 2.862e-05,
+    "high_water_mark": 2.865e-05,
     "status": "open"
   },
   "XRP": {
