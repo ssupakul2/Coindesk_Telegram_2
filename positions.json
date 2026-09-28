@@ -25,10 +25,10 @@
     "tier": "mid",
     "atr_at_entry": 0.006564285714285718,
     "tp1_hit": true,
-    "tp1_5_hit": false,
+    "tp1_5_hit": true,
     "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 0.149,
+    "remaining_size_pct": 0.25,
+    "high_water_mark": 0.1501,
     "status": "open"
   },
   "FLOKI": {
