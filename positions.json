@@ -62,5 +62,21 @@
     "remaining_size_pct": 1.0,
     "high_water_mark": 1.5176,
     "status": "open"
+  },
+  "BNB": {
+    "entry_price": 767.79,
+    "entry_time": "2026-09-30T21:26:50.867506+00:00",
+    "sl": 718.3615,
+    "original_sl": 718.3615,
+    "tp1": 784.7567142857142,
+    "tp2": 801.7234285714286,
+    "tier": "mid",
+    "atr_at_entry": 9.585714285714298,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 767.79,
+    "status": "open"
   }
 }
