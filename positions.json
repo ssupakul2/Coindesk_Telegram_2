@@ -28,7 +28,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.1837,
+    "high_water_mark": 1.1868,
     "status": "open"
   },
   "XRP": {
@@ -44,13 +44,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.5176,
+    "high_water_mark": 1.524,
     "status": "open"
   },
   "BNB": {
     "entry_price": 767.79,
     "entry_time": "2026-09-30T21:26:50.867506+00:00",
-    "sl": 718.3615,
+    "sl": 767.79,
     "original_sl": 718.3615,
     "tp1": 784.7567142857142,
     "tp2": 801.7234285714286,
@@ -60,13 +60,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 773.47,
+    "high_water_mark": 778.12,
     "status": "open"
   },
   "SOL": {
     "entry_price": 119.99,
     "entry_time": "2026-10-02T03:24:44.480538+00:00",
-    "sl": 110.50399999999999,
+    "sl": 119.99,
     "original_sl": 110.50399999999999,
     "tp1": 123.21039285714285,
     "tp2": 126.4307857142857,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 119.99,
+    "high_water_mark": 121.77,
     "status": "open"
   }
 }
