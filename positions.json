@@ -31,22 +31,6 @@
     "high_water_mark": 1.1868,
     "status": "open"
   },
-  "XRP": {
-    "entry_price": 1.5017,
-    "entry_time": "2026-09-29T09:24:40.786775+00:00",
-    "sl": 1.5017,
-    "original_sl": 1.3791149999999999,
-    "tp1": 1.560869642857143,
-    "tp2": 1.620039285714286,
-    "tier": "mid",
-    "atr_at_entry": 0.03357142857142862,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 1.5365,
-    "status": "open"
-  },
   "BNB": {
     "entry_price": 767.79,
     "entry_time": "2026-09-30T21:26:50.867506+00:00",
