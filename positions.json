@@ -28,7 +28,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.1868,
+    "high_water_mark": 1.1919,
     "status": "open"
   },
   "BTC": {
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 84645.55,
+    "high_water_mark": 84881.05,
     "status": "open"
   },
   "OP": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1309,
+    "high_water_mark": 0.1319,
     "status": "open"
   }
 }
