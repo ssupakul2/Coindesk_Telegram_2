@@ -34,17 +34,17 @@
   "BTC": {
     "entry_price": 84540.26,
     "entry_time": "2026-10-03T00:24:48.027138+00:00",
-    "sl": 84540.26,
+    "sl": 84958.04571428572,
     "original_sl": 80706.5415,
     "tp1": 85631.9686,
     "tp2": 87495.5144,
     "tier": "major",
     "atr_at_entry": 920.6399999999994,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 85380.0,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 85797.72,
     "status": "open"
   },
   "OP": {
