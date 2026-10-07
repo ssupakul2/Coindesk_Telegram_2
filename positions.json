@@ -31,20 +31,36 @@
     "high_water_mark": 1.2361,
     "status": "open"
   },
-  "OP": {
-    "entry_price": 0.1336,
-    "entry_time": "2026-10-06T06:24:43.370565+00:00",
-    "sl": 0.12530499999999997,
-    "original_sl": 0.12530499999999997,
-    "tp1": 0.1392805,
-    "tp2": 0.14496099999999998,
-    "tier": "mid",
-    "atr_at_entry": 0.003864285714285711,
+  "ETH": {
+    "entry_price": 2608.67,
+    "entry_time": "2026-10-07T03:24:47.186553+00:00",
+    "sl": 2521.8310383098305,
+    "original_sl": 2521.8310383098305,
+    "tp1": 2655.281567857143,
+    "tp2": 2701.893135714286,
+    "tier": "major",
+    "atr_at_entry": 32.201428571428586,
     "tp1_hit": false,
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1345,
+    "high_water_mark": 2608.67,
+    "status": "open"
+  },
+  "BNB": {
+    "entry_price": 766.29,
+    "entry_time": "2026-10-07T03:24:47.241721+00:00",
+    "sl": 724.8689999999999,
+    "original_sl": 724.8689999999999,
+    "tp1": 782.2078285714285,
+    "tp2": 798.125657142857,
+    "tier": "mid",
+    "atr_at_entry": 7.802857142857119,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 766.29,
     "status": "open"
   }
 }
