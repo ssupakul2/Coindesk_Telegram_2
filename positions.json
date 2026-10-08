@@ -31,22 +31,6 @@
     "high_water_mark": 1.2361,
     "status": "open"
   },
-  "ETH": {
-    "entry_price": 2608.67,
-    "entry_time": "2026-10-07T03:24:47.186553+00:00",
-    "sl": 2521.8310383098305,
-    "original_sl": 2521.8310383098305,
-    "tp1": 2655.281567857143,
-    "tp2": 2701.893135714286,
-    "tier": "major",
-    "atr_at_entry": 32.201428571428586,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 2616.36,
-    "status": "open"
-  },
   "BNB": {
     "entry_price": 766.29,
     "entry_time": "2026-10-07T03:24:47.241721+00:00",
@@ -63,20 +47,36 @@
     "high_water_mark": 773.66,
     "status": "open"
   },
-  "SOL": {
-    "entry_price": 118.61,
-    "entry_time": "2026-10-07T06:24:42.300968+00:00",
-    "sl": 109.85799999999999,
-    "original_sl": 109.85799999999999,
-    "tp1": 121.27544642857143,
-    "tp2": 123.94089285714287,
+  "XRP": {
+    "entry_price": 1.3577,
+    "entry_time": "2026-10-08T15:26:49.851257+00:00",
+    "sl": 1.289815,
+    "original_sl": 1.289815,
+    "tp1": 1.4524015,
+    "tp2": 1.4729967499999999,
     "tier": "mid",
-    "atr_at_entry": 1.6607142857142887,
+    "atr_at_entry": 0.027549999999999995,
     "tp1_hit": false,
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 118.61,
+    "high_water_mark": 1.3577,
+    "status": "open"
+  },
+  "SHIB": {
+    "entry_price": 5.19e-06,
+    "entry_time": "2026-10-08T15:26:49.962525+00:00",
+    "sl": 4.7748000000000004e-06,
+    "original_sl": 4.7748000000000004e-06,
+    "tp1": 5.4824499999999995e-06,
+    "tp2": 5.806875e-06,
+    "tier": "small",
+    "atr_at_entry": 1.2500000000000002e-07,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 5.19e-06,
     "status": "open"
   }
 }
