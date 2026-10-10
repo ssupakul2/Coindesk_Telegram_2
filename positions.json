@@ -50,7 +50,7 @@
   "XRP": {
     "entry_price": 1.3577,
     "entry_time": "2026-10-08T15:26:49.851257+00:00",
-    "sl": 1.289815,
+    "sl": 1.3577,
     "original_sl": 1.289815,
     "tp1": 1.4524015,
     "tp2": 1.4729967499999999,
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.4022,
+    "high_water_mark": 1.4086,
     "status": "open"
   },
   "SHIB": {
