@@ -66,7 +66,7 @@
   "SHIB": {
     "entry_price": 5.39e-06,
     "entry_time": "2026-10-11T03:24:44.702936+00:00",
-    "sl": 4.710400000000001e-06,
+    "sl": 5.39e-06,
     "original_sl": 4.710400000000001e-06,
     "tp1": 5.529489285714285e-06,
     "tp2": 5.668978571428571e-06,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 5.41e-06,
+    "high_water_mark": 5.46e-06,
     "status": "open"
   }
 }
