@@ -62,5 +62,21 @@
     "remaining_size_pct": 1.0,
     "high_water_mark": 0.1353,
     "status": "open"
+  },
+  "DOGE": {
+    "entry_price": 0.08379,
+    "entry_time": "2026-10-13T03:24:41.979883+00:00",
+    "sl": 0.07546760000000001,
+    "original_sl": 0.07546760000000001,
+    "tp1": 0.08772775714285715,
+    "tp2": 0.09166551428571429,
+    "tier": "small",
+    "atr_at_entry": 0.0016007142857142847,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.08379,
+    "status": "open"
   }
 }
