@@ -50,7 +50,7 @@
   "OP": {
     "entry_price": 0.1353,
     "entry_time": "2026-10-12T15:27:49.699917+00:00",
-    "sl": 0.12635,
+    "sl": 0.1353,
     "original_sl": 0.12635,
     "tp1": 0.14410167857142858,
     "tp2": 0.15290335714285713,
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1386,
+    "high_water_mark": 0.1441,
     "status": "open"
   },
   "DOGE": {
