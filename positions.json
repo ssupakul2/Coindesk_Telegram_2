@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 2.448e-05,
+    "high_water_mark": 2.457e-05,
     "status": "open"
   },
   "XRP": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.3383,
+    "high_water_mark": 1.3411,
     "status": "open"
   },
   "SHIB": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 5.09e-06,
+    "high_water_mark": 5.14e-06,
     "status": "open"
   }
 }
