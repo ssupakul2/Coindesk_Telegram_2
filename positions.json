@@ -15,38 +15,6 @@
     "high_water_mark": 0.3437,
     "status": "open"
   },
-  "SUI": {
-    "entry_price": 1.1564,
-    "entry_time": "2026-09-28T21:26:58.516214+00:00",
-    "sl": 1.0028920000000001,
-    "original_sl": 1.0028920000000001,
-    "tp1": 1.3177673750000003,
-    "tp2": 1.4791347500000003,
-    "tier": "small",
-    "atr_at_entry": 0.05135000000000002,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 1.2361,
-    "status": "open"
-  },
-  "BNB": {
-    "entry_price": 766.29,
-    "entry_time": "2026-10-07T03:24:47.241721+00:00",
-    "sl": 724.8689999999999,
-    "original_sl": 724.8689999999999,
-    "tp1": 782.2078285714285,
-    "tp2": 798.125657142857,
-    "tier": "mid",
-    "atr_at_entry": 7.802857142857119,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 773.66,
-    "status": "open"
-  },
   "DOGE": {
     "entry_price": 0.08379,
     "entry_time": "2026-10-13T03:24:41.979883+00:00",
@@ -63,20 +31,20 @@
     "high_water_mark": 0.08491,
     "status": "open"
   },
-  "AVAX": {
-    "entry_price": 10.268,
-    "entry_time": "2026-10-13T21:26:48.778975+00:00",
-    "sl": 9.61875,
-    "original_sl": 9.61875,
-    "tp1": 10.92709,
-    "tp2": 11.388397142857142,
-    "tier": "mid",
-    "atr_at_entry": 0.2829285714285712,
+  "FLOKI": {
+    "entry_price": 2.381e-05,
+    "entry_time": "2026-10-15T03:24:38.614145+00:00",
+    "sl": 2.19052e-05,
+    "original_sl": 2.19052e-05,
+    "tp1": 2.569840357142857e-05,
+    "tp2": 2.7586807142857142e-05,
+    "tier": "small",
+    "atr_at_entry": 7.47142857142857e-07,
     "tp1_hit": false,
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 10.326,
+    "high_water_mark": 2.381e-05,
     "status": "open"
   }
 }
