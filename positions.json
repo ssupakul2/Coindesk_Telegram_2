@@ -46,5 +46,37 @@
     "remaining_size_pct": 1.0,
     "high_water_mark": 2.381e-05,
     "status": "open"
+  },
+  "XRP": {
+    "entry_price": 1.317,
+    "entry_time": "2026-10-15T09:24:49.858937+00:00",
+    "sl": 1.25115,
+    "original_sl": 1.25115,
+    "tp1": 1.3757394642857141,
+    "tp2": 1.4344789285714286,
+    "tier": "mid",
+    "atr_at_entry": 0.025264285714285708,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 1.317,
+    "status": "open"
+  },
+  "SHIB": {
+    "entry_price": 4.96e-06,
+    "entry_time": "2026-10-15T09:24:50.114706+00:00",
+    "sl": 4.5632e-06,
+    "original_sl": 4.5632e-06,
+    "tp1": 5.2020785714285716e-06,
+    "tp2": 5.444157142857143e-06,
+    "tier": "small",
+    "atr_at_entry": 1.0214285714285714e-07,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 4.96e-06,
+    "status": "open"
   }
 }
