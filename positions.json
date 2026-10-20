@@ -50,7 +50,7 @@
   "SUI": {
     "entry_price": 0.9984,
     "entry_time": "2026-10-17T12:27:46.893800+00:00",
-    "sl": 0.899944,
+    "sl": 0.9984,
     "original_sl": 0.899944,
     "tp1": 1.0518503571428572,
     "tp2": 1.1053007142857143,
@@ -60,13 +60,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.0168,
+    "high_water_mark": 1.0299,
     "status": "open"
   },
   "FLOKI": {
     "entry_price": 2.262e-05,
     "entry_time": "2026-10-18T21:27:45.042720+00:00",
-    "sl": 2.3907857142857142e-05,
+    "sl": 2.4045e-05,
     "original_sl": 2.08104e-05,
     "tp1": 2.3619723214285715e-05,
     "tp2": 2.4619446428571427e-05,
@@ -76,7 +76,7 @@
     "tp1_5_hit": true,
     "partial_closed": true,
     "remaining_size_pct": 0.25,
-    "high_water_mark": 2.451e-05,
+    "high_water_mark": 2.461e-05,
     "status": "open"
   }
 }
