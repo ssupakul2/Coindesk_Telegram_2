@@ -66,17 +66,17 @@
   "FLOKI": {
     "entry_price": 2.262e-05,
     "entry_time": "2026-10-18T21:27:45.042720+00:00",
-    "sl": 2.322e-05,
+    "sl": 2.360142857142857e-05,
     "original_sl": 2.08104e-05,
     "tp1": 2.3619723214285715e-05,
     "tp2": 2.4619446428571427e-05,
     "tier": "small",
     "atr_at_entry": 4.178571428571426e-07,
     "tp1_hit": true,
-    "tp1_5_hit": false,
+    "tp1_5_hit": true,
     "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 2.371e-05,
+    "remaining_size_pct": 0.25,
+    "high_water_mark": 2.416e-05,
     "status": "open"
   }
 }
