@@ -60,13 +60,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.0112,
+    "high_water_mark": 1.0168,
     "status": "open"
   },
   "FLOKI": {
     "entry_price": 2.262e-05,
     "entry_time": "2026-10-18T21:27:45.042720+00:00",
-    "sl": 2.360142857142857e-05,
+    "sl": 2.3907857142857142e-05,
     "original_sl": 2.08104e-05,
     "tp1": 2.3619723214285715e-05,
     "tp2": 2.4619446428571427e-05,
@@ -76,7 +76,7 @@
     "tp1_5_hit": true,
     "partial_closed": true,
     "remaining_size_pct": 0.25,
-    "high_water_mark": 2.416e-05,
+    "high_water_mark": 2.451e-05,
     "status": "open"
   }
 }
