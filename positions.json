@@ -34,7 +34,7 @@
   "XRP": {
     "entry_price": 1.317,
     "entry_time": "2026-10-15T09:24:49.858937+00:00",
-    "sl": 1.25115,
+    "sl": 1.317,
     "original_sl": 1.25115,
     "tp1": 1.3757394642857141,
     "tp2": 1.4344789285714286,
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.3423,
+    "high_water_mark": 1.3585,
     "status": "open"
   },
   "SUI": {
@@ -66,7 +66,7 @@
   "BNB": {
     "entry_price": 743.16,
     "entry_time": "2026-10-21T06:24:44.022805+00:00",
-    "sl": 670.6999999999999,
+    "sl": 743.16,
     "original_sl": 670.6999999999999,
     "tp1": 752.6251071428571,
     "tp2": 762.0902142857143,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 743.16,
+    "high_water_mark": 748.76,
     "status": "open"
   }
 }
