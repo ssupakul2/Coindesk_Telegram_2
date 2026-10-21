@@ -34,17 +34,17 @@
   "XRP": {
     "entry_price": 1.317,
     "entry_time": "2026-10-15T09:24:49.858937+00:00",
-    "sl": 1.317,
+    "sl": 1.3584,
     "original_sl": 1.25115,
     "tp1": 1.3757394642857141,
     "tp2": 1.4344789285714286,
     "tier": "mid",
     "atr_at_entry": 0.025264285714285708,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 1.3585,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 1.3789,
     "status": "open"
   },
   "SUI": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.0363,
+    "high_water_mark": 1.0463,
     "status": "open"
   },
   "BNB": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 748.76,
+    "high_water_mark": 748.8,
     "status": "open"
   }
 }
