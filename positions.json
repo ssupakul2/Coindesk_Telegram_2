@@ -31,22 +31,6 @@
     "high_water_mark": 0.08491,
     "status": "open"
   },
-  "XRP": {
-    "entry_price": 1.317,
-    "entry_time": "2026-10-15T09:24:49.858937+00:00",
-    "sl": 1.3756214285714288,
-    "original_sl": 1.25115,
-    "tp1": 1.3757394642857141,
-    "tp2": 1.4344789285714286,
-    "tier": "mid",
-    "atr_at_entry": 0.025264285714285708,
-    "tp1_hit": true,
-    "tp1_5_hit": false,
-    "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 1.3963,
-    "status": "open"
-  },
   "SUI": {
     "entry_price": 0.9984,
     "entry_time": "2026-10-17T12:27:46.893800+00:00",
@@ -77,6 +61,22 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 751.17,
+    "status": "open"
+  },
+  "XRP": {
+    "entry_price": 1.3655,
+    "entry_time": "2026-10-22T00:24:39.557534+00:00",
+    "sl": 1.19339,
+    "original_sl": 1.19339,
+    "tp1": 1.4091571785714285,
+    "tp2": 1.4528143571428571,
+    "tier": "mid",
+    "atr_at_entry": 0.021014285714285715,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 1.3655,
     "status": "open"
   }
 }
