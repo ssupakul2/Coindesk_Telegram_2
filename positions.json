@@ -66,7 +66,7 @@
   "AVAX": {
     "entry_price": 8.73,
     "entry_time": "2026-10-24T15:27:45.428837+00:00",
-    "sl": 8.2935,
+    "sl": 8.73,
     "original_sl": 8.2935,
     "tp1": 9.015447857142856,
     "tp2": 9.300895714285714,
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 8.857,
+    "high_water_mark": 8.907,
     "status": "open"
   }
 }
