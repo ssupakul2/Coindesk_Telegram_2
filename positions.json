@@ -63,20 +63,20 @@
     "high_water_mark": 82722.01,
     "status": "open"
   },
-  "ADA": {
-    "entry_price": 0.2035,
-    "entry_time": "2026-10-27T06:24:41.483647+00:00",
-    "sl": 0.2035,
-    "original_sl": 0.19332499999999997,
-    "tp1": 0.21023585714285714,
-    "tp2": 0.21697171428571427,
-    "tier": "mid",
-    "atr_at_entry": 0.003621428571428573,
+  "FLOKI": {
+    "entry_price": 2.366e-05,
+    "entry_time": "2026-10-28T15:27:50.805910+00:00",
+    "sl": 2.15832e-05,
+    "original_sl": 2.15832e-05,
+    "tp1": 2.4758e-05,
+    "tp2": 2.5855999999999998e-05,
+    "tier": "small",
+    "atr_at_entry": 4.799999999999995e-07,
     "tp1_hit": false,
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.2073,
+    "high_water_mark": 2.366e-05,
     "status": "open"
   }
 }
