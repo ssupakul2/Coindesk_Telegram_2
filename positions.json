@@ -63,20 +63,20 @@
     "high_water_mark": 82722.01,
     "status": "open"
   },
-  "FLOKI": {
-    "entry_price": 2.366e-05,
-    "entry_time": "2026-10-28T15:27:50.805910+00:00",
-    "sl": 2.366e-05,
-    "original_sl": 2.15832e-05,
-    "tp1": 2.4758e-05,
-    "tp2": 2.5855999999999998e-05,
-    "tier": "small",
-    "atr_at_entry": 4.799999999999995e-07,
+  "OP": {
+    "entry_price": 0.1082,
+    "entry_time": "2026-10-29T03:24:43.694990+00:00",
+    "sl": 0.10279,
+    "original_sl": 0.10279,
+    "tp1": 0.11261750000000001,
+    "tp2": 0.117035,
+    "tier": "mid",
+    "atr_at_entry": 0.002714285714285714,
     "tp1_hit": false,
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 2.423e-05,
+    "high_water_mark": 0.1082,
     "status": "open"
   }
 }
