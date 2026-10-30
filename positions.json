@@ -14,5 +14,53 @@
     "remaining_size_pct": 1.0,
     "high_water_mark": 1.3655,
     "status": "open"
+  },
+  "EIGEN": {
+    "entry_price": 0.1738,
+    "entry_time": "2026-10-30T06:24:45.701398+00:00",
+    "sl": 0.159896,
+    "original_sl": 0.159896,
+    "tp1": 0.1962754107142857,
+    "tp2": 0.2187508214285714,
+    "tier": "small",
+    "atr_at_entry": 0.009164285714285708,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.1738,
+    "status": "open"
+  },
+  "OP": {
+    "entry_price": 0.1033,
+    "entry_time": "2026-10-30T06:24:45.745940+00:00",
+    "sl": 0.08911,
+    "original_sl": 0.08911,
+    "tp1": 0.112206625,
+    "tp2": 0.12111325,
+    "tier": "mid",
+    "atr_at_entry": 0.004549999999999999,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.1033,
+    "status": "open"
+  },
+  "TRX": {
+    "entry_price": 0.3361,
+    "entry_time": "2026-10-30T06:24:45.867011+00:00",
+    "sl": 0.315115,
+    "original_sl": 0.315115,
+    "tp1": 0.35071075,
+    "tp2": 0.36532149999999997,
+    "tier": "mid",
+    "atr_at_entry": 0.0060499999999999955,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.3361,
+    "status": "open"
   }
 }
