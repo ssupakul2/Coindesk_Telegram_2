@@ -1,20 +1,4 @@
 {
-  "TRX": {
-    "entry_price": 0.3424,
-    "entry_time": "2026-09-23T12:26:46.370350+00:00",
-    "sl": 0.3455357142857143,
-    "original_sl": 0.31777500000000003,
-    "tp1": 0.34625999999999996,
-    "tp2": 0.35278246428571425,
-    "tier": "mid",
-    "atr_at_entry": 0.0020785714285714296,
-    "tp1_hit": true,
-    "tp1_5_hit": false,
-    "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 0.3482,
-    "status": "open"
-  },
   "XRP": {
     "entry_price": 1.3655,
     "entry_time": "2026-10-22T00:24:39.557534+00:00",
@@ -29,38 +13,6 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 1.3655,
-    "status": "open"
-  },
-  "SUI": {
-    "entry_price": 1.004,
-    "entry_time": "2026-10-22T03:24:44.629012+00:00",
-    "sl": 0.8622240000000001,
-    "original_sl": 0.8622240000000001,
-    "tp1": 1.0510532857142858,
-    "tp2": 1.0981065714285716,
-    "tier": "small",
-    "atr_at_entry": 0.02376428571428573,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 1.004,
-    "status": "open"
-  },
-  "BTC": {
-    "entry_price": 82722.01,
-    "entry_time": "2026-10-22T06:24:43.749560+00:00",
-    "sl": 79298.67075,
-    "original_sl": 79298.67075,
-    "tp1": 84118.4820142857,
-    "tp2": 85514.95402857142,
-    "tier": "major",
-    "atr_at_entry": 878.2842857142844,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 82722.01,
     "status": "open"
   }
 }
