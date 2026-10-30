@@ -28,13 +28,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.174,
+    "high_water_mark": 0.1826,
     "status": "open"
   },
   "OP": {
     "entry_price": 0.1033,
     "entry_time": "2026-10-30T06:24:45.745940+00:00",
-    "sl": 0.08911,
+    "sl": 0.1033,
     "original_sl": 0.08911,
     "tp1": 0.112206625,
     "tp2": 0.12111325,
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1044,
+    "high_water_mark": 0.1093,
     "status": "open"
   },
   "TRX": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1933,
+    "high_water_mark": 0.1944,
     "status": "open"
   }
 }
