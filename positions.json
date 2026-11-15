@@ -12,7 +12,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.859e-05,
+    "high_water_mark": 1.873e-05,
     "status": "open"
   },
   "BNB": {
@@ -28,7 +28,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 596.76,
+    "high_water_mark": 597.86,
     "status": "open"
   },
   "SOL": {
@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 72.08,
+    "high_water_mark": 72.66,
     "status": "open"
   },
   "XRP": {
@@ -61,6 +61,22 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 0.9693,
+    "status": "open"
+  },
+  "OP": {
+    "entry_price": 0.0826,
+    "entry_time": "2026-11-15T12:27:49.279170+00:00",
+    "sl": 0.07847,
+    "original_sl": 0.07847,
+    "tp1": 0.094724,
+    "tp2": 0.09729957142857144,
+    "tier": "mid",
+    "atr_at_entry": 0.003171428571428573,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.0826,
     "status": "open"
   }
 }
