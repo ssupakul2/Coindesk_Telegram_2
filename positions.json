@@ -1,20 +1,4 @@
 {
-  "FLOKI": {
-    "entry_price": 1.859e-05,
-    "entry_time": "2026-11-14T15:27:45.893240+00:00",
-    "sl": 1.71028e-05,
-    "original_sl": 1.71028e-05,
-    "tp1": 2.035335714285714e-05,
-    "tp2": 2.2116714285714282e-05,
-    "tier": "small",
-    "atr_at_entry": 5.571428571428564e-07,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 1.873e-05,
-    "status": "open"
-  },
   "BNB": {
     "entry_price": 588.77,
     "entry_time": "2026-11-14T18:27:53.288217+00:00",
@@ -77,6 +61,22 @@
     "partial_closed": false,
     "remaining_size_pct": 1.0,
     "high_water_mark": 7.269,
+    "status": "open"
+  },
+  "SUI": {
+    "entry_price": 0.7006,
+    "entry_time": "2026-11-20T03:24:47.485430+00:00",
+    "sl": 0.62146,
+    "original_sl": 0.62146,
+    "tp1": 0.7364564821428571,
+    "tp2": 0.7723129642857143,
+    "tier": "small",
+    "atr_at_entry": 0.01713571428571428,
+    "tp1_hit": false,
+    "tp1_5_hit": false,
+    "partial_closed": false,
+    "remaining_size_pct": 1.0,
+    "high_water_mark": 0.7006,
     "status": "open"
   }
 }
