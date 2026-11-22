@@ -50,17 +50,17 @@
   "NEAR": {
     "entry_price": 2.594,
     "entry_time": "2026-11-21T06:24:41.088033+00:00",
-    "sl": 2.873357142857143,
+    "sl": 2.8809285714285715,
     "original_sl": 2.462785714285714,
     "tp1": 2.8656135714285713,
     "tp2": 3.137227142857143,
     "tier": "mid",
     "atr_at_entry": 0.1312142857142858,
     "tp1_hit": true,
-    "tp1_5_hit": false,
+    "tp1_5_hit": true,
     "partial_closed": true,
-    "remaining_size_pct": 0.5,
-    "high_water_mark": 2.998,
+    "remaining_size_pct": 0.25,
+    "high_water_mark": 3.008,
     "status": "open"
   },
   "DOGE": {
