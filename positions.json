@@ -44,13 +44,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 1.632e-05,
+    "high_water_mark": 1.645e-05,
     "status": "open"
   },
   "NEAR": {
     "entry_price": 2.594,
     "entry_time": "2026-11-21T06:24:41.088033+00:00",
-    "sl": 2.8915714285714285,
+    "sl": 2.9251428571428573,
     "original_sl": 2.462785714285714,
     "tp1": 2.8656135714285713,
     "tp2": 3.137227142857143,
@@ -60,7 +60,7 @@
     "tp1_5_hit": true,
     "partial_closed": true,
     "remaining_size_pct": 0.25,
-    "high_water_mark": 3.015,
+    "high_water_mark": 3.039,
     "status": "open"
   },
   "DOGE": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.05536,
+    "high_water_mark": 0.05561,
     "status": "open"
   }
 }
