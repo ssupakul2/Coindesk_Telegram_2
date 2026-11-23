@@ -12,7 +12,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1458,
+    "high_water_mark": 0.147,
     "status": "open"
   },
   "SHIB": {
@@ -34,17 +34,17 @@
   "FLOKI": {
     "entry_price": 1.515e-05,
     "entry_time": "2026-11-21T06:24:40.846571+00:00",
-    "sl": 1.515e-05,
+    "sl": 1.6224999999999998e-05,
     "original_sl": 1.3938000000000001e-05,
     "tp1": 1.64995125e-05,
     "tp2": 1.7849025e-05,
     "tier": "small",
     "atr_at_entry": 4.849999999999997e-07,
-    "tp1_hit": false,
+    "tp1_hit": true,
     "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 1.646e-05,
+    "partial_closed": true,
+    "remaining_size_pct": 0.5,
+    "high_water_mark": 1.662e-05,
     "status": "open"
   },
   "NEAR": {
@@ -76,7 +76,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.05561,
+    "high_water_mark": 0.05572,
     "status": "open"
   }
 }
