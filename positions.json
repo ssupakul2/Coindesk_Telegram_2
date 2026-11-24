@@ -1,20 +1,4 @@
 {
-  "SHIB": {
-    "entry_price": 3.58e-06,
-    "entry_time": "2026-11-21T00:24:47.411438+00:00",
-    "sl": 3.58e-06,
-    "original_sl": 3.2108000000000002e-06,
-    "tp1": 3.821135714285714e-06,
-    "tp2": 4.062271428571428e-06,
-    "tier": "small",
-    "atr_at_entry": 8.642857142857141e-08,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 3.81e-06,
-    "status": "open"
-  },
   "AVAX": {
     "entry_price": 7.056,
     "entry_time": "2026-11-23T15:27:53.984110+00:00",
