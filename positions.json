@@ -31,22 +31,6 @@
     "high_water_mark": 1.696e-05,
     "status": "open"
   },
-  "ADA": {
-    "entry_price": 0.1478,
-    "entry_time": "2026-11-23T21:27:56.294455+00:00",
-    "sl": 0.13832,
-    "original_sl": 0.13832,
-    "tp1": 0.1538582857142857,
-    "tp2": 0.1599165714285714,
-    "tier": "mid",
-    "atr_at_entry": 0.0035428571428571453,
-    "tp1_hit": false,
-    "tp1_5_hit": false,
-    "partial_closed": false,
-    "remaining_size_pct": 1.0,
-    "high_water_mark": 0.1492,
-    "status": "open"
-  },
   "DOGE": {
     "entry_price": 0.05511,
     "entry_time": "2026-11-25T00:24:49.774367+00:00",
