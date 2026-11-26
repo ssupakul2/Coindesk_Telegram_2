@@ -34,7 +34,7 @@
   "DOGE": {
     "entry_price": 0.05511,
     "entry_time": "2026-11-25T00:24:49.774367+00:00",
-    "sl": 0.049873200000000006,
+    "sl": 0.05511,
     "original_sl": 0.049873200000000006,
     "tp1": 0.05840260714285714,
     "tp2": 0.06169521428571428,
@@ -44,13 +44,13 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.05655,
+    "high_water_mark": 0.05682,
     "status": "open"
   },
   "OP": {
     "entry_price": 0.0689,
     "entry_time": "2026-11-25T21:27:54.299773+00:00",
-    "sl": 0.06193999999999999,
+    "sl": 0.0689,
     "original_sl": 0.06193999999999999,
     "tp1": 0.07205369642857143,
     "tp2": 0.07520739285714285,
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.0697,
+    "high_water_mark": 0.0706,
     "status": "open"
   }
 }
