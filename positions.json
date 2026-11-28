@@ -44,7 +44,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 0.0711,
+    "high_water_mark": 0.0713,
     "status": "open"
   },
   "BNB": {
@@ -60,7 +60,7 @@
     "tp1_5_hit": false,
     "partial_closed": false,
     "remaining_size_pct": 1.0,
-    "high_water_mark": 553.76,
+    "high_water_mark": 555.56,
     "status": "open"
   }
 }
